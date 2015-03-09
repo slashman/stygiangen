@@ -1,0 +1,16 @@
+<html>
+<head>
+<script type="text/javascript" src="stygianGen.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+var generator = new Generator();
+function generate(){
+	var level = generator.generateLevel(1);
+	generator.drawLevel(level, 'testCanvas');
+}
+</script>
+<canvas id="testCanvas" width="128" height="128"></canvas>
+<input type = "button" value = "Generate" onclick="generate();"/>
+</body>
+</html>
