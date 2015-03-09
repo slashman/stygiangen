@@ -20,6 +20,7 @@ FirstLevelGenerator.prototype = {
 		var hasLava = depth > 5 && Util.chance(depth * 10 + 20);
 		var mainEntrance = depth == 1;
 		var areas = this.generateAreas();
+		this.connectAreas(areas);
 		var level = {
 			hasRiver: hasRiver,
 			hasLava: hasLava,
@@ -48,7 +49,8 @@ FirstLevelGenerator.prototype = {
 			var horizontalSplit = Util.chance(50);
 			if (bigArea.w < MIN_WIDTH && bigArea.h < MIN_HEIGHT){
 				bigArea.areaType = 'cavern';
-				bigArea.areaId = 'c1'; 
+				bigArea.areaId = 'c1';
+				bigArea.bridges = [];
 				areas.push(bigArea);
 				continue;
 			} 
@@ -90,10 +92,12 @@ FirstLevelGenerator.prototype = {
 			}
 			if (bigArea.depth == maxDepth){
 				area1.areaType = 'cavern';
-				area1.areaId = 'c1'; 
+				area1.areaId = 'c1';
+				area1.bridges = [];
 				areas.push(area1);
-				area1.areaType = 'cavern';
-				area1.areaId = 'c2'; 
+				area2.areaType = 'cavern';
+				area2.areaId = 'c2'; 
+				area2.bridges = [];
 				areas.push(area2);
 			} else {
 				area1.depth = bigArea.depth +1;
@@ -103,8 +107,77 @@ FirstLevelGenerator.prototype = {
 			}
 		}
 		return areas;
+	},
+	connectAreas: function(areas){
+		/* Make one area connected
+		 * While not all areas connected,
+		 *  Select a connected area
+		 *  Select a valid wall from the area
+		 *  Tear it down, connecting to the a nearby area
+		 *  Mark area as connected
+		 */
+		var connectedAreas = [];
+		var randomArea = Util.randomElementOf(areas);
+		connectedAreas.push(randomArea);
+		var cursor = {};
+		var vari = {};
+		while (connectedAreas.length < areas.length){
+			randomArea = Util.randomElementOf(connectedAreas);
+			var wallDir = Util.rand(1,4);
+			switch(wallDir){
+			case 1: // Left
+				cursor.x = randomArea.x;
+				cursor.y = Util.rand(randomArea.y, randomArea.y+randomArea.h);
+				vari.x = -2;
+				vari.y = 0;
+				break;
+			case 2: //Right
+				cursor.x = randomArea.x + randomArea.w;
+				cursor.y = Util.rand(randomArea.y, randomArea.y+randomArea.h);
+				vari.x = 2;
+				vari.y = 0;
+				break;
+			case 3: //Up
+				cursor.x = Util.rand(randomArea.x, randomArea.x+randomArea.w);
+				cursor.y = randomArea.y;
+				vari.x = 0;
+				vari.y = -2;
+				break;
+			case 4: //Down
+				cursor.x = Util.rand(randomArea.x, randomArea.x+randomArea.w);
+				cursor.y = randomArea.y + randomArea.h;
+				vari.x = 0;
+				vari.y = 2;
+				break;
+			}
+			var connectedArea = this.getAreaAt(cursor, vari, areas);
+			if (connectedArea && !Util.contains(connectedAreas, connectedArea)){
+				this.connectArea(randomArea, connectedArea, cursor);
+				connectedAreas.push(connectedArea);
+			}
+		}
+	},
+	getAreaAt: function(cursor, vari, areas){
+		for (var i = 0; i < areas.length; i++){
+			var area = areas[i];
+			if (cursor.x + vari.x > area.x && cursor.x + vari.x < area.x + area.w 
+					&& cursor.y + vari.y > area.y && cursor.y + vari.y < area.y + area.h)
+				return area;
+		}
+		return false;
+	},
+	connectArea: function(area1, area2, position){
+		area1.bridges.push({
+			x: position.x,
+			y: position.y,
+			to: area2
+		});
+		area2.bridges.push({
+			x: position.x,
+			y: position.y,
+			to: area1
+		});
 	}
-
 }
 
 module.exports = FirstLevelGenerator;

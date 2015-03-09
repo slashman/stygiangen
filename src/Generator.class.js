@@ -18,12 +18,20 @@ Generator.prototype = {
 		for (var i = 0; i < level.areas.length; i++){
 			var area = level.areas[i];
 			context.beginPath();
-			context.rect(area.x * zoom, area.y * zoom, (area.w - 1) * zoom, (area.h-1) * zoom);
+			context.rect(area.x * zoom, area.y * zoom, area.w * zoom, area.h * zoom);
 			context.fillStyle = 'yellow';
 			context.fill();
-			context.lineWidth = 1;
+			context.lineWidth = 2;
 			context.strokeStyle = 'black';
 			context.stroke();
+			for (var j = 0; j < area.bridges.length; j++){
+				var bridge = area.bridges[j];
+				context.beginPath();
+				context.rect((bridge.x) * zoom, (bridge.y) * zoom, zoom, zoom);
+				context.lineWidth = 2;
+				context.strokeStyle = 'red';
+				context.stroke();
+			}
 		}
 	}
 }

@@ -30,5 +30,8 @@ module.exports = {
 	},
 	chance: function (chance){
 		return this.rand(0,100) <= chance;
+	},
+	contains: function(array, element){
+	    return array.indexOf(element) > -1;
 	}
 }
