@@ -72,6 +72,10 @@ Generator.prototype = {
 					color = '#FF0000';
 				}else if (cell === 'upstairs'){
 					color = '#00FF00';
+				}else if (cell === 'stoneWall'){
+					color = '#FFFFFF';
+				}else if (cell === 'stoneFloor'){
+					color = '#000000';
 				}
 				context.fillStyle = color;
 				context.fillRect(x * zoom, y * zoom, zoom, zoom);

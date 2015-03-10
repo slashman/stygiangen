@@ -4,6 +4,7 @@ function ThirdLevelGenerator(config){
 
 var Util = require('./Utils');
 var CA = require('./CA');
+var Splitter = require('./Splitter');
 
 ThirdLevelGenerator.prototype = {
 	fillLevel: function(sketch, level){
@@ -24,7 +25,7 @@ ThirdLevelGenerator.prototype = {
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
 			if (current === 'water')
 				return false;
-			if (surrounding['cavernFloor'] > 0)
+			if (surrounding['cavernFloor'] > 1)
 				return 'cavernFloor';
 			return false;
 		}, 1);
@@ -123,7 +124,43 @@ ThirdLevelGenerator.prototype = {
 					level.cells[point.x][point.y] = area.floor;
 			}
 		}
+	},
+	fillWithRooms: function(level, area){
+		var bigArea = {
+			x: area.x,
+			y: area.y,
+			w: area.w,
+			h: area.h
+		}
+		var maxDepth = 2;
+		var MIN_WIDTH = 10;
+		var MIN_HEIGHT = 10;
+		var SLICE_RANGE_START = 3/8;
+		var SLICE_RANGE_END = 5/8;
+		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END);
+		Splitter.connectAreas(areas);
+		for (var i = 0; i < areas.length; i++){
+			var subarea = areas[i];
+			subarea.floor = area.floor;
+			subarea.wall = area.wall;
+			this.carveRoomAt(level, subarea);
+		}
+	},
+	carveRoomAt: function(level, area){
+		for (var x = area.x; x <= area.x + area.w; x++){
+			for (var y = area.y; y <= area.y + area.h; y++){
+				if (x == area.x || x == area.x + area.w|| y == area.y || y == area.y + area.h)
+					level.cells[x][y] = area.wall;
+				else
+					level.cells[x][y] = area.floor;
+			}
+		}
+		for (var i = 0; i < area.bridges; i++){
+			var bridge = area.bridges[i];
+			level.cells[bridge.x][bridge.y] = area.floor;
+		}
 	}
+	
 }
 
 module.exports = ThirdLevelGenerator;
