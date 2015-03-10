@@ -1,15 +1,5 @@
 function FirstLevelGenerator(config){
-	this.config = {
-		MIN_WIDTH: 32,
-		MIN_HEIGHT: 32,
-		LEVEL_WIDTH: 64,
-		LEVEL_HEIGHT: 64,
-		SUBDIVISION_DEPTH: 3,
-		SLICE_RANGE_START: 3/8,
-		SLICE_RANGE_END: 5/8,
-	}
-	if (config)
-		this.config = config;
+	this.config = config;
 }
 
 var Util = require('./Utils');

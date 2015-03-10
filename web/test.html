@@ -4,13 +4,28 @@
 </head>
 <body>
 <script type="text/javascript">
-var generator = new Generator();
+var generator = new Generator({
+	MIN_WIDTH: 32,
+	MIN_HEIGHT: 32,
+	LEVEL_WIDTH: 64,
+	LEVEL_HEIGHT: 64,
+	SUBDIVISION_DEPTH: 3,
+	SLICE_RANGE_START: 3/8,
+	SLICE_RANGE_END: 5/8,
+	RIVER_SEGMENT_LENGTH: 10,
+	MIN_RIVER_SEGMENTS: 10,
+	MAX_RIVER_SEGMENTS: 20,
+	MIN_RIVERS: 3,
+	MAX_RIVERS: 5
+});
 function generate(){
-	var level = generator.generateLevel(1);
-	generator.drawLevel(level, 'testCanvas');
+	var results = generator.generateLevel(1);
+	generator.drawSketch(results.sketch, 'sketchCanvas');
+	generator.drawLevel(results.level, 'levelCanvas');
 }
 </script>
-<canvas id="testCanvas" width="128" height="128"></canvas>
+<canvas id="sketchCanvas" width="128" height="128"></canvas>
+<canvas id="levelCanvas" width="128" height="128"></canvas>
 <input type = "button" value = "Generate" onclick="generate();"/>
 </body>
 </html>
