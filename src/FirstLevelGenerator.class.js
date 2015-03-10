@@ -16,6 +16,7 @@ FirstLevelGenerator.prototype = {
 			hasRiver: hasRiver,
 			hasLava: hasLava,
 			mainEntrance: mainEntrance,
+			strata: 'solidRock',
 			areas: areas
 		}
 		return level;
@@ -41,6 +42,7 @@ FirstLevelGenerator.prototype = {
 			if (bigArea.w < MIN_WIDTH && bigArea.h < MIN_HEIGHT){
 				bigArea.areaType = 'cavern';
 				bigArea.areaId = 'c1';
+				bigArea.floor = 'cavernFloor';
 				bigArea.bridges = [];
 				areas.push(bigArea);
 				continue;
@@ -84,10 +86,12 @@ FirstLevelGenerator.prototype = {
 			if (bigArea.depth == maxDepth){
 				area1.areaType = 'cavern';
 				area1.areaId = 'c1';
+				area1.floor = 'cavernFloor';
 				area1.bridges = [];
 				areas.push(area1);
 				area2.areaType = 'cavern';
 				area2.areaId = 'c2'; 
+				area2.floor = 'cavernFloor';
 				area2.bridges = [];
 				areas.push(area2);
 			} else {

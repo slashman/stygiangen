@@ -2,15 +2,18 @@ function Generator(config){
 	this.config = config;
 	this.firstLevelGenerator = new FirstLevelGenerator(config);
 	this.secondLevelGenerator = new SecondLevelGenerator(config);
+	this.thirdLevelGenerator = new ThirdLevelGenerator(config);
 }
 
 var FirstLevelGenerator = require('./FirstLevelGenerator.class');
 var SecondLevelGenerator = require('./SecondLevelGenerator.class');
+var ThirdLevelGenerator = require('./ThirdLevelGenerator.class');
 
 Generator.prototype = {
 	generateLevel: function(depth){
 		var sketch = this.firstLevelGenerator.generateLevel(depth);
 		var level = this.secondLevelGenerator.fillLevel(sketch);
+		this.thirdLevelGenerator.fillLevel(sketch, level);
 		return {
 			sketch: sketch,
 			level: level
@@ -49,7 +52,7 @@ Generator.prototype = {
 			}
 		}
 	},
-	drawLevel: function(level, canvas){
+	drawLevel: function(cells, canvas){
 		var canvas = document.getElementById(canvas);
 		var context = canvas.getContext('2d');
 		context.font="12px Georgia";
@@ -58,9 +61,17 @@ Generator.prototype = {
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
 			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
 				var color = '#FFFFFF';
-				var cell = level.cells[x][y];
+				var cell = cells[x][y];
 				if (cell === 'water'){
 					color = '#0000FF';
+				}else if (cell === 'solidRock'){
+					color = '#594B2D';
+				}else if (cell === 'cavernFloor'){
+					color = '#876418';
+				}else if (cell === 'downstairs'){
+					color = '#FF0000';
+				}else if (cell === 'upstairs'){
+					color = '#00FF00';
 				}
 				context.fillStyle = color;
 				context.fillRect(x * zoom, y * zoom, zoom, zoom);

@@ -10,23 +10,42 @@ SecondLevelGenerator.prototype = {
 	fillLevel: function(sketch){
 		var level = new Level(this.config);
 		level.init();
+		this.fillStrata(level, sketch);
 		if (sketch.hasRivers || true)
 			this.plotRivers(level, sketch, 'water');
 		if (sketch.hasLava)
 			this.plotRivers(level, sketch, 'lava');
+		this.copyGeo(level);
 		return level;
+	},
+	fillStrata: function(level, sketch){
+		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
+			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
+				level.cells[x][y] = sketch.strata;
+			}
+		}
+	},
+	copyGeo: function(level){
+		var geo = [];
+		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
+			geo[x] = [];
+			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
+				geo[x][y] = level.cells[x][y];
+			}
+		}
+		level.geo = geo;
 	},
 	plotRivers: function(level, sketch, liquid){
 		this.placeRiverlines(level, sketch, liquid);
 		this.fattenRivers(level, liquid);
 	},
 	fattenRivers: function(level, liquid){
-		level.cells = CA.runCA(level.cells, function(surrounding){
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
 			if (surrounding[liquid] > 1 && Util.chance(30))
 				return liquid;
 			return false;
 		}, 1);
-		level.cells = CA.runCA(level.cells, function(surrounding){
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
 			if (surrounding[liquid] > 0)
 				return liquid;
 			return false;

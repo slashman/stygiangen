@@ -21,10 +21,12 @@ var generator = new Generator({
 function generate(){
 	var results = generator.generateLevel(1);
 	generator.drawSketch(results.sketch, 'sketchCanvas');
-	generator.drawLevel(results.level, 'levelCanvas');
+	generator.drawLevel(results.level.geo, 'geoCanvas');
+	generator.drawLevel(results.level.cells, 'levelCanvas');
 }
 </script>
 <canvas id="sketchCanvas" width="128" height="128"></canvas>
+<canvas id="geoCanvas" width="128" height="128"></canvas>
 <canvas id="levelCanvas" width="128" height="128"></canvas>
 <input type = "button" value = "Generate" onclick="generate();"/>
 </body>
