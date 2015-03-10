@@ -4,6 +4,8 @@ function SecondLevelGenerator(config){
 
 var Util = require('./Utils');
 var Level = require('./Level.class');
+var CA = require('./CA');
+
 SecondLevelGenerator.prototype = {
 	fillLevel: function(sketch){
 		var level = new Level(this.config);
@@ -15,6 +17,22 @@ SecondLevelGenerator.prototype = {
 		return level;
 	},
 	plotRivers: function(level, sketch, liquid){
+		this.placeRiverlines(level, sketch, liquid);
+		this.fattenRivers(level, liquid);
+	},
+	fattenRivers: function(level, liquid){
+		level.cells = CA.runCA(level.cells, function(surrounding){
+			if (surrounding[liquid] > 1 && Util.chance(30))
+				return liquid;
+			return false;
+		}, 1);
+		level.cells = CA.runCA(level.cells, function(surrounding){
+			if (surrounding[liquid] > 0)
+				return liquid;
+			return false;
+		}, 1);
+	},
+	placeRiverlines: function(level, sketch, liquid){
 		// Place random line segments of water
 		var rivers = Util.rand(this.config.MIN_RIVERS,this.config.MAX_RIVERS);
 		var riverSegmentLength = this.config.RIVER_SEGMENT_LENGTH;
@@ -42,7 +60,6 @@ SecondLevelGenerator.prototype = {
 					newPoint.y > 0 && newPoint.y < this.config.LEVEL_HEIGHT)
 					riverPoints.push(newPoint);
 				var line = Util.line(randomPoint, newPoint);
-				console.log("Adding a segment from "+randomPoint.x+","+randomPoint.y+" to "+newPoint.x+","+newPoint.y);
 				for (var k = 0; k < line.length; k++){
 					var point = line[k];
 					if (point.x > 0 && point.x < this.config.LEVEL_WIDTH && 
