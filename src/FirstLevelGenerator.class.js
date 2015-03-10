@@ -25,8 +25,8 @@ FirstLevelGenerator.prototype = {
 		var bigArea = {
 			x: 0,
 			y: 0,
-			w: this.config.LEVEL_WIDTH-1,
-			h: this.config.LEVEL_HEIGHT-1
+			w: this.config.LEVEL_WIDTH,
+			h: this.config.LEVEL_HEIGHT
 		}
 		var maxDepth = this.config.SUBDIVISION_DEPTH;
 		var MIN_WIDTH = this.config.MIN_WIDTH;

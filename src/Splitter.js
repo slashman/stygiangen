@@ -27,11 +27,11 @@ module.exports = {
 					x: bigArea.x,
 					y: bigArea.y,
 					w: bigArea.w,
-					h: slice-1
+					h: slice
 				};
 				area2 = {
 					x: bigArea.x,
-					y: bigArea.y+slice,
+					y: bigArea.y + slice,
 					w: bigArea.w,
 					h: bigArea.h - slice
 				}
@@ -40,7 +40,7 @@ module.exports = {
 				area1 = {
 					x: bigArea.x,
 					y: bigArea.y,
-					w: slice-1,
+					w: slice,
 					h: bigArea.h
 				}
 				area2 = {
@@ -77,36 +77,49 @@ module.exports = {
 		connectedAreas.push(randomArea);
 		var cursor = {};
 		var vari = {};
-		while (connectedAreas.length < areas.length){
+		area: while (connectedAreas.length < areas.length){
 			randomArea = Util.randomElementOf(connectedAreas);
 			var wallDir = Util.rand(1,4);
 			switch(wallDir){
 			case 1: // Left
 				cursor.x = randomArea.x;
-				cursor.y = Util.rand(randomArea.y, randomArea.y+randomArea.h);
+				cursor.y = Util.rand(randomArea.y + 2 , randomArea.y+randomArea.h - 2);
 				vari.x = -2;
 				vari.y = 0;
 				break;
 			case 2: //Right
 				cursor.x = randomArea.x + randomArea.w;
-				cursor.y = Util.rand(randomArea.y, randomArea.y+randomArea.h);
+				cursor.y = Util.rand(randomArea.y + 2, randomArea.y+randomArea.h - 2);
 				vari.x = 2;
 				vari.y = 0;
 				break;
 			case 3: //Up
-				cursor.x = Util.rand(randomArea.x, randomArea.x+randomArea.w);
+				cursor.x = Util.rand(randomArea.x + 2, randomArea.x+randomArea.w - 2);
 				cursor.y = randomArea.y;
 				vari.x = 0;
 				vari.y = -2;
 				break;
 			case 4: //Down
-				cursor.x = Util.rand(randomArea.x, randomArea.x+randomArea.w);
+				cursor.x = Util.rand(randomArea.x + 2, randomArea.x+randomArea.w - 2);
 				cursor.y = randomArea.y + randomArea.h;
 				vari.x = 0;
 				vari.y = 2;
 				break;
 			}
 			var connectedArea = this.getAreaAt(cursor, vari, areas);
+			switch(wallDir){
+			case 1:
+			case 2:
+				if (cursor.y <= connectedArea.y + 2 || cursor.y >= connectedArea.y + connectedArea.h - 2)
+					continue area;
+				break;
+			case 3:
+			case 4:
+				if (cursor.x <= connectedArea.x + 2 || cursor.x >= connectedArea.x + connectedArea.w - 2)
+					continue area;
+				break;
+			}
+			
 			if (connectedArea && !Util.contains(connectedAreas, connectedArea)){
 				this.connectArea(randomArea, connectedArea, cursor);
 				connectedAreas.push(connectedArea);
@@ -116,8 +129,8 @@ module.exports = {
 	getAreaAt: function(cursor, vari, areas){
 		for (var i = 0; i < areas.length; i++){
 			var area = areas[i];
-			if (cursor.x + vari.x > area.x && cursor.x + vari.x < area.x + area.w 
-					&& cursor.y + vari.y > area.y && cursor.y + vari.y < area.y + area.h)
+			if (cursor.x + vari.x >= area.x && cursor.x + vari.x <= area.x + area.w 
+					&& cursor.y + vari.y >= area.y && cursor.y + vari.y <= area.y + area.h)
 				return area;
 		}
 		return false;
@@ -135,5 +148,3 @@ module.exports = {
 		});
 	}
 }
-
-	
