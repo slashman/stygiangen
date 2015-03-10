@@ -21,6 +21,7 @@ FirstLevelGenerator.prototype = {
 		var mainEntrance = depth == 1;
 		var areas = this.generateAreas();
 		this.connectAreas(areas);
+		this.placeExits(areas);
 		var level = {
 			hasRiver: hasRiver,
 			hasLava: hasLava,
@@ -177,6 +178,18 @@ FirstLevelGenerator.prototype = {
 			y: position.y,
 			to: area1
 		});
+	},
+	placeExits: function(areas){
+		var dist = null;
+		var area1 = null;
+		var area2 = null;
+		do {
+			area1 = Util.randomElementOf(areas);
+			area2 = Util.randomElementOf(areas);
+			dist = Util.lineDistance(area1, area2);
+		} while (dist < (this.config.LEVEL_WIDTH + this.config.LEVEL_HEIGHT) / 3);
+		area1.hasExit = true;
+		area2.hasEntrance = true;
 	}
 }
 
