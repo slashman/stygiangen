@@ -24,7 +24,7 @@ Generator.prototype = {
 		var context = canvas.getContext('2d');
 		context.font="12px Georgia";
 		context.clearRect(0, 0, canvas.width, canvas.height);
-		var zoom = 2;
+		var zoom = 8;
 		for (var i = 0; i < level.areas.length; i++){
 			var area = level.areas[i];
 			context.beginPath();
@@ -57,7 +57,7 @@ Generator.prototype = {
 		var context = canvas.getContext('2d');
 		context.font="12px Georgia";
 		context.clearRect(0, 0, canvas.width, canvas.height);
-		var zoom = 2;
+		var zoom = 8;
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
 			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
 				var color = '#FFFFFF';
