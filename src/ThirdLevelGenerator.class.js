@@ -150,7 +150,7 @@ ThirdLevelGenerator.prototype = {
 				}
 			}
 		}
-		areas = this.removeUnneededAreas(bridgeAreas, areas, 1);
+		areas = this.removeUnneededAreas(bridgeAreas, areas, bigArea );
 		for (var i = 0; i < areas.length; i++){
 			var subarea = areas[i];
 			subarea.floor = area.floor;
@@ -188,14 +188,13 @@ ThirdLevelGenerator.prototype = {
 			//TODO: Link areas with corridors, using bridges (actual bridge position wont matter much, use curved corridors)
 		}
 	},
-	removeUnneededAreas: function(keepAreas, areas){
+	removeUnneededAreas: function(keepAreas, areas, bigArea){
 		// All keep areas should be connected with a single pivot area
-		var pivotArea = Util.randomElementOf(areas);
+		var pivotArea = Splitter.getAreaAt({x: Math.round(bigArea.x + bigArea.w/2), y: Math.round(bigArea.y + bigArea.h/2)},{x:0,y:0}, areas);
 		var pathAreas = [];
 		for (var i = 0; i < keepAreas.length; i++){
 			var keepArea = keepAreas[i];
 			var areasPath = this.getDrunkenAreasPath(keepArea, pivotArea, areas);
-			//var areasPath = this.getAreasPath(keepArea, pivotArea, areas);
 			for (var j = 0; j < areasPath.length; j++){
 				var pathArea = areasPath[j];
 				if (!Util.contains(pathAreas, pathArea)){
