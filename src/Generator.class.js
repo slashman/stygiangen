@@ -77,6 +77,10 @@ Generator.prototype = {
 					color = '#FFFFFF';
 				}else if (cell === 'stoneFloor'){
 					color = '#BBBBBB';
+				}else if (cell === 'corridor'){
+					color = '#FF0000';
+				}else if (cell === 'padding'){
+					color = '#00FF00';
 				}
 				context.fillStyle = color;
 				context.fillRect(x * zoom, y * zoom, zoom, zoom);

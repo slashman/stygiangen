@@ -74,7 +74,7 @@ ThirdLevelGenerator.prototype = {
 				y: Util.rand(area.y, area.y+area.h-1)
 			}
 			var cell = level.cells[randPoint.x][randPoint.y]; 
-			if (cell == area.floor)
+			if (cell == area.floor || area.corridor && cell == area.corridor)
 				return randPoint;
 		}
 	},
@@ -151,6 +151,7 @@ ThirdLevelGenerator.prototype = {
 				continue;
 			subarea.floor = area.floor;
 			subarea.wall = area.wall;
+			subarea.corridor = area.corridor;
 			this.carveRoomAt(level, subarea);
 		}
 	},
@@ -161,22 +162,22 @@ ThirdLevelGenerator.prototype = {
 			if (bridge.x == area.x){
 				// Left Corridor
 				for (var j = bridge.x; j < bridge.x + area.w / 2; j++){
-					level.cells[j][bridge.y] = area.floor;
+					level.cells[j][bridge.y] = area.corridor;
 				}
 			} else if (bridge.x == area.x + area.w){
 				// Right corridor
 				for (var j = bridge.x; j >= bridge.x - area.w / 2; j--){
-					level.cells[j][bridge.y] = area.floor;
+					level.cells[j][bridge.y] = area.corridor;
 				}
 			} else if (bridge.y == area.y){
 				// Top corridor
 				for (var j = bridge.y; j < bridge.y + area.h / 2; j++){
-					level.cells[bridge.x][j] = area.floor;
+					level.cells[bridge.x][j] = area.corridor;
 				}
 			} else {
 				// Down Corridor
 				for (var j = bridge.y; j >= bridge.y - area.h / 2; j--){
-					level.cells[bridge.x][j] = area.floor;
+					level.cells[bridge.x][j] = area.corridor;
 				}
 			}
 		}
@@ -192,9 +193,9 @@ ThirdLevelGenerator.prototype = {
 		var roomy = area.y + pady;
 		var roomw = area.w - 2 * padx;
 		var roomh = area.h - 2 * pady;
-		for (var x = roomx; x < roomx + roomw; x++){
-			for (var y = roomy; y < roomy + roomh; y++){
-				if (x == roomx || x == roomx + roomw - 1 || y == roomy || y == roomy + roomh - 1){
+		for (var x = roomx; x <= roomx + roomw; x++){
+			for (var y = roomy; y <= roomy + roomh; y++){
+				if (x == roomx || x == roomx + roomw || y == roomy || y == roomy + roomh){
 					/*if (level.cells[x][y] != area.floor)
 						level.cells[x][y] = area.wall;*/
 				} else {

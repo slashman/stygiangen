@@ -46,6 +46,7 @@ FirstLevelGenerator.prototype = {
 				area.areaId = 'c1';
 				area.floor = 'stoneFloor';
 				area.wall = 'solidRock';
+				area.corridor = 'corridor';
 			}
 		}
 		return areas;
