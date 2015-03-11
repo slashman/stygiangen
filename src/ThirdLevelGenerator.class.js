@@ -66,15 +66,6 @@ ThirdLevelGenerator.prototype = {
 			var freeSpot = this.getFreeSpot(level, area);
 			level.cells[freeSpot.x][freeSpot.y] = tile;
 		}
-		// Build a small island around exits
-		level.cells = CA.runCA(level.cells, function(current, surrounding){
-			if (current != 'water')
-				return false;
-			if (surrounding['downstairs'] > 0 || surrounding['upstairs'] > 0)
-				return 'cavernFloor';
-			return false;
-		}, 1);
-		
 	},
 	getFreeSpot: function(level, area){
 		while(true){
@@ -83,7 +74,7 @@ ThirdLevelGenerator.prototype = {
 				y: Util.rand(area.y, area.y+area.h-1)
 			}
 			var cell = level.cells[randPoint.x][randPoint.y]; 
-			if (cell == area.floor || cell == 'water')
+			if (cell == area.floor)
 				return randPoint;
 		}
 	},
@@ -137,7 +128,7 @@ ThirdLevelGenerator.prototype = {
 		var MIN_HEIGHT = 10;
 		var SLICE_RANGE_START = 3/8;
 		var SLICE_RANGE_END = 5/8;
-		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END);
+		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, bigArea.bridges);
 		Splitter.connectAreas(areas);
 		var bridgeAreas = [];
 		for (var i = 0; i < areas.length; i++){
@@ -145,7 +136,6 @@ ThirdLevelGenerator.prototype = {
 			for (var j = 0; j < area.bridges.length; j++){
 				var bridge = area.bridges[j];
 				if (Splitter.getAreaAt(bridge,{x:0,y:0}, areas) == subarea){
-					//subarea.externalConnections.push(bridge);
 					bridgeAreas.push(subarea);
 					subarea.bridges.push({
 						x: bridge.x,
@@ -163,7 +153,6 @@ ThirdLevelGenerator.prototype = {
 			subarea.wall = area.wall;
 			this.carveRoomAt(level, subarea);
 		}
-		//TODO: Link bridge subareas with adjacent areas
 	},
 	carveRoomAt: function(level, area){
 		// Trace corridors from exits
@@ -206,10 +195,10 @@ ThirdLevelGenerator.prototype = {
 		for (var x = roomx; x < roomx + roomw; x++){
 			for (var y = roomy; y < roomy + roomh; y++){
 				if (x == roomx || x == roomx + roomw - 1 || y == roomy || y == roomy + roomh - 1){
-					if (level.cells[x][y] != area.floor)
-						level.cells[x][y] = area.wall;
+					/*if (level.cells[x][y] != area.floor)
+						level.cells[x][y] = area.wall;*/
 				} else {
-					if (area.unneeded)
+					if (area.marked)
 						level.cells[x][y] = 'water';
 					else
 						level.cells[x][y] = area.floor;
@@ -221,7 +210,6 @@ ThirdLevelGenerator.prototype = {
 	useAreas: function(keepAreas, areas, bigArea){
 		// All keep areas should be connected with a single pivot area
 		var pivotArea = Splitter.getAreaAt({x: Math.round(bigArea.x + bigArea.w/2), y: Math.round(bigArea.y + bigArea.h/2)},{x:0,y:0}, areas);
-		pivotArea.unneeded = true;
 		var pathAreas = [];
 		for (var i = 0; i < keepAreas.length; i++){
 			var keepArea = keepAreas[i];

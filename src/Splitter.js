@@ -1,7 +1,7 @@
 var Util = require('./Utils');
 
 module.exports = {
-	subdivideArea: function(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END){
+	subdivideArea: function(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, avoidPoints){
 		var areas = [];
 		var bigAreas = [];
 		bigArea.depth = 0;
@@ -50,6 +50,8 @@ module.exports = {
 					h: bigArea.h
 				};
 			}
+			if (avoidPoints && (this.collidesWith(avoidPoints, area2) || this.collidesWith(avoidPoints, area1)))
+				continue;
 			if (bigArea.depth == maxDepth){
 				area1.bridges = [];
 				area2.bridges = [];
@@ -63,6 +65,23 @@ module.exports = {
 			}
 		}
 		return areas;
+	},
+	collidesWith: function(avoidPoints, area){
+		for (var i = 0; i < avoidPoints.length; i++){
+			var avoidPoint = avoidPoints[i];
+			if (area.x == avoidPoint.x || area.x + area.w == avoidPoint.x){
+				if (Math.abs(area.y - avoidPoint.y) <= 2)
+					return true;
+				if (Math.abs(area.y + area.h - avoidPoint.y) <= 2)
+					return true;
+			} else if (area.y == avoidPoint.y || area.y + area.h == avoidPoint.y){
+				if (Math.abs(area.x - avoidPoint.x) <= 2)
+					return true;
+				if (Math.abs(area.x + area.w - avoidPoint.x) <= 2)
+					return true;
+			}
+		}
+		return false;
 	},
 	connectAreas: function(areas){
 		/* Make one area connected
