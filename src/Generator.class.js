@@ -34,14 +34,15 @@ Generator.prototype = {
 			context.lineWidth = 2;
 			context.strokeStyle = 'black';
 			context.stroke();
+			var areaDescription = area.areaType;
 			if (area.hasExit){
-				context.fillStyle = 'black';
-				context.fillText(">",(area.x + area.w/2)* zoom,(area.y + area.h/2)* zoom);
+				areaDescription += ", down";
 			}
 			if (area.hasEntrance){
-				context.fillStyle = 'black';
-				context.fillText("<",(area.x + area.w/2)* zoom,(area.y + area.h/2)* zoom);
+				areaDescription += ", up";
 			}
+			context.fillStyle = 'black';
+			context.fillText(areaDescription,(area.x + area.w/2)* zoom,(area.y + area.h/2)* zoom);
 			for (var j = 0; j < area.bridges.length; j++){
 				var bridge = area.bridges[j];
 				context.beginPath();
