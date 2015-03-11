@@ -86,6 +86,43 @@ Generator.prototype = {
 				context.fillRect(x * zoom, y * zoom, zoom, zoom);
 			}
 		}
+	},
+	drawLevelWithIcons: function(cells, canvas){
+		var canvas = document.getElementById(canvas);
+		var context = canvas.getContext('2d');
+		context.font="12px Georgia";
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		var zoom = 8;
+		var water = new Image();
+		water.src = 'img/water.png';
+		var solidRock = new Image();
+		solidRock.src = 'img/solidRock.png';
+		var cavernFloor = new Image();
+		cavernFloor.src = 'img/cavernFloor.png';
+		var downstairs = new Image();
+		downstairs.src = 'img/downstairs.png';
+		var upstairs = new Image();
+		upstairs.src = 'img/upstairs.png';
+		var stoneWall = new Image();
+		stoneWall.src = 'img/stoneWall.png';
+		var stoneFloor = new Image();
+		stoneFloor.src = 'img/stoneFloor.png';
+		var tiles = {
+			water: water,
+			solidRock: solidRock,
+			cavernFloor: cavernFloor,
+			downstairs: downstairs,
+			upstairs: upstairs,
+			stoneWall: stoneWall,
+			stoneFloor: stoneFloor
+		}
+	      
+		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
+			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
+				var cell = cells[x][y];
+				context.drawImage(tiles[cell], x * 16, y * 16);
+			}
+		}
 	}
 }
 

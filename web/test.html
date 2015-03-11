@@ -23,10 +23,12 @@ function generate(){
 	generator.drawSketch(results.sketch, 'sketchCanvas');
 	//generator.drawLevel(results.level.geo, 'geoCanvas');
 	generator.drawLevel(results.level.cells, 'levelCanvas');
+	generator.drawLevelWithIcons(results.level.cells, 'levelCanvasImage');
 }
 </script>
 <canvas id="sketchCanvas" width="512" height="512"></canvas>
 <canvas id="levelCanvas" width="512" height="512"></canvas>
+<canvas id="levelCanvasImage" width="1024" height="1024"></canvas>
 <input type = "button" value = "Generate" onclick="generate();"/>
 </body>
 </html>
