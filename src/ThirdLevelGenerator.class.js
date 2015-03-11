@@ -147,6 +147,10 @@ ThirdLevelGenerator.prototype = {
 				if (Splitter.getAreaAt(bridge,{x:0,y:0}, areas) == subarea){
 					//subarea.externalConnections.push(bridge);
 					bridgeAreas.push(subarea);
+					subarea.bridges.push({
+						x: bridge.x,
+						y: bridge.y
+					});
 				}
 			}
 		}
@@ -232,6 +236,8 @@ ThirdLevelGenerator.prototype = {
 			if (!area.render){
 				bridgesRemove: for (var j = 0; j < area.bridges.length; j++){
 					var bridge = area.bridges[j];
+					if (!bridge.to)
+						continue;
 					for (var k = 0; k < bridge.to.bridges.length; k++){
 						var sourceBridge = bridge.to.bridges[k];
 						if (sourceBridge.x == bridge.x && sourceBridge.y == bridge.y){
@@ -249,6 +255,8 @@ ThirdLevelGenerator.prototype = {
 		path.push(toArea);
 		while (true){
 			var randomBridge = Util.randomElementOf(currentArea.bridges);
+			if (!randomBridge.to)
+				continue;
 			if (!Util.contains(path, randomBridge.to)){
 				path.push(randomBridge.to);
 			}
