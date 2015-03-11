@@ -83,44 +83,44 @@ module.exports = {
 			switch(wallDir){
 			case 1: // Left
 				cursor.x = randomArea.x;
-				cursor.y = Util.rand(randomArea.y + 2 , randomArea.y+randomArea.h - 2);
+				cursor.y = Util.rand(randomArea.y + 1 , randomArea.y+randomArea.h - 1);
 				vari.x = -2;
 				vari.y = 0;
 				break;
 			case 2: //Right
 				cursor.x = randomArea.x + randomArea.w;
-				cursor.y = Util.rand(randomArea.y + 2, randomArea.y+randomArea.h - 2);
+				cursor.y = Util.rand(randomArea.y + 1, randomArea.y+randomArea.h - 1);
 				vari.x = 2;
 				vari.y = 0;
 				break;
 			case 3: //Up
-				cursor.x = Util.rand(randomArea.x + 2, randomArea.x+randomArea.w - 2);
+				cursor.x = Util.rand(randomArea.x + 1, randomArea.x+randomArea.w - 1);
 				cursor.y = randomArea.y;
 				vari.x = 0;
 				vari.y = -2;
 				break;
 			case 4: //Down
-				cursor.x = Util.rand(randomArea.x + 2, randomArea.x+randomArea.w - 2);
+				cursor.x = Util.rand(randomArea.x + 1, randomArea.x+randomArea.w - 1);
 				cursor.y = randomArea.y + randomArea.h;
 				vari.x = 0;
 				vari.y = 2;
 				break;
 			}
 			var connectedArea = this.getAreaAt(cursor, vari, areas);
-			switch(wallDir){
-			case 1:
-			case 2:
-				if (cursor.y <= connectedArea.y + 2 || cursor.y >= connectedArea.y + connectedArea.h - 2)
-					continue area;
-				break;
-			case 3:
-			case 4:
-				if (cursor.x <= connectedArea.x + 2 || cursor.x >= connectedArea.x + connectedArea.w - 2)
-					continue area;
-				break;
-			}
-			
 			if (connectedArea && !Util.contains(connectedAreas, connectedArea)){
+				switch(wallDir){
+				case 1:
+				case 2:
+					if (cursor.y <= connectedArea.y + 1 || cursor.y >= connectedArea.y + connectedArea.h - 1)
+						continue area;
+					break;
+				case 3:
+				case 4:
+					if (cursor.x <= connectedArea.x + 1 || cursor.x >= connectedArea.x + connectedArea.w - 1)
+						continue area;
+					break;
+				}
+				
 				this.connectArea(randomArea, connectedArea, cursor);
 				connectedAreas.push(connectedArea);
 			}
