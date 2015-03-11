@@ -1,0 +1,9 @@
+Magic effects
+* Remove poison
+* Recover [X] HP
+* Increase player light for [X] seconds
+* Shoot a [bolt|ball] of [ROLL] [normal/fire/ice/death] damage
+* Change AI to [flee|asleep|confused] for [all|undead] enemies within an [X] tiles radius for [Y] seconds
+* Try to teleport to an area [X] tiles in front.
+* Double defense for [X] seconds
+* Halve enemies speed for [X] seconds
