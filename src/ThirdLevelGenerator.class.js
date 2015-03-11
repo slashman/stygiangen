@@ -150,9 +150,11 @@ ThirdLevelGenerator.prototype = {
 				}
 			}
 		}
-		areas = this.removeUnneededAreas(bridgeAreas, areas, bigArea );
+		this.useAreas(bridgeAreas, areas, bigArea);
 		for (var i = 0; i < areas.length; i++){
 			var subarea = areas[i];
+			if (!subarea.render)
+				continue;
 			subarea.floor = area.floor;
 			subarea.wall = area.wall;
 			this.carveRoomAt(level, subarea);
@@ -184,7 +186,6 @@ ThirdLevelGenerator.prototype = {
 					level.cells[bridge.x][j] = area.floor;
 				}
 			}
-			//level.cells[bridge.x][bridge.y] = 'water';
 		}
 		var padx = 0;
 		if (area.w > 5)
@@ -213,39 +214,33 @@ ThirdLevelGenerator.prototype = {
 		}
 		
 	},
-	removeUnneededAreas: function(keepAreas, areas, bigArea){
+	useAreas: function(keepAreas, areas, bigArea){
 		// All keep areas should be connected with a single pivot area
 		var pivotArea = Splitter.getAreaAt({x: Math.round(bigArea.x + bigArea.w/2), y: Math.round(bigArea.y + bigArea.h/2)},{x:0,y:0}, areas);
 		pivotArea.unneeded = true;
 		var pathAreas = [];
 		for (var i = 0; i < keepAreas.length; i++){
 			var keepArea = keepAreas[i];
+			keepArea.render = true;
 			var areasPath = this.getDrunkenAreasPath(keepArea, pivotArea, areas);
 			for (var j = 0; j < areasPath.length; j++){
-				var pathArea = areasPath[j];
-				if (!Util.contains(pathAreas, pathArea)){
-					pathAreas.push(pathArea);
-				}
+				areasPath[j].render = true;
 			}
 		}
 		for (var i = 0; i < areas.length; i++){
 			var area = areas[i];
-			if (!Util.contains(pathAreas, area)){
+			if (!area.render){
 				bridgesRemove: for (var j = 0; j < area.bridges.length; j++){
 					var bridge = area.bridges[j];
 					for (var k = 0; k < bridge.to.bridges.length; k++){
 						var sourceBridge = bridge.to.bridges[k];
 						if (sourceBridge.x == bridge.x && sourceBridge.y == bridge.y){
 							Util.removeFromArray(bridge.to.bridges, sourceBridge);
-							break bridgesRemove;
 						}
 					}
 				}
-				Util.removeFromArray(areas, area);
-				//area.unneeded = true;
 			}
 		}
-		return areas;
 	},
 	getDrunkenAreasPath: function (fromArea, toArea, areas){
 		var currentArea = fromArea;
