@@ -9,9 +9,9 @@ var Splitter = require('./Splitter');
 ThirdLevelGenerator.prototype = {
 	fillLevel: function(sketch, level){
 		this.fillRooms(sketch, level)
-		this.fattenCaverns(level);
+		/*this.fattenCaverns(level);
 		this.placeExits(sketch, level);
-		this.raiseIslands(level);
+		this.raiseIslands(level);*/
 		return level;
 	},
 	fattenCaverns: function(level){
@@ -139,6 +139,18 @@ ThirdLevelGenerator.prototype = {
 		var SLICE_RANGE_END = 5/8;
 		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END);
 		Splitter.connectAreas(areas);
+		var bridgeAreas = [];
+		for (var i = 0; i < areas.length; i++){
+			var subarea = areas[i];
+			for (var j = 0; j < area.bridges.length; j++){
+				var bridge = area.bridges[j];
+				if (Splitter.getAreaAt(bridge,{x:0,y:0}, areas) == subarea){
+					//subarea.externalConnections.push(bridge);
+					bridgeAreas.push(subarea);
+				}
+			}
+		}
+		//areas = this.removeUnneededAreas(bridgeAreas, areas, 1);
 		for (var i = 0; i < areas.length; i++){
 			var subarea = areas[i];
 			subarea.floor = area.floor;
@@ -147,18 +159,62 @@ ThirdLevelGenerator.prototype = {
 		}
 	},
 	carveRoomAt: function(level, area){
-		for (var x = area.x; x <= area.x + area.w; x++){
-			for (var y = area.y; y <= area.y + area.h; y++){
-				if (x == area.x || x == area.x + area.w|| y == area.y || y == area.y + area.h)
+		for (var x = area.x; x < area.x + area.w; x++){
+			for (var y = area.y; y < area.y + area.h; y++){
+				if (x == area.x || x == area.x + area.w - 1 || y == area.y || y == area.y + area.h - 1){
 					level.cells[x][y] = area.wall;
-				else
-					level.cells[x][y] = area.floor;
+				} else {
+					if (area.unneeded)
+						level.cells[x][y] = 'water';
+					else
+						level.cells[x][y] = area.floor;
+				}
 			}
 		}
 		for (var i = 0; i < area.bridges; i++){
 			var bridge = area.bridges[i];
-			level.cells[bridge.x][bridge.y] = area.floor;
+			level.cells[bridge.x][bridge.y] = 'water';
 		}
+	},
+	removeUnneededAreas: function(keepAreas, areas){
+		// All keep areas should be connected with a single pivot area
+		var pivotArea = Util.randomElementOf(areas);
+		var pathAreas = [];
+		for (var i = 0; i < keepAreas.length; i++){
+			var keepArea = keepAreas[i];
+			var areasPath = this.getDrunkenAreasPath(keepArea, pivotArea, areas);
+			//var areasPath = this.getAreasPath(keepArea, pivotArea, areas);
+			for (var j = 0; j < areasPath.length; j++){
+				var pathArea = areasPath[j];
+				if (!Util.contains(pathAreas, pathArea)){
+					pathAreas.push(pathArea);
+				}
+			}
+		}
+		for (var i = 0; i < areas.length; i++){
+			var area = areas[i];
+			if (!Util.contains(pathAreas, area)){
+				Util.removeFromArray(areas, area);
+				//area.unneeded = false;
+			}
+		}
+		return areas;
+	},
+	getDrunkenAreasPath: function (fromArea, toArea, areas){
+		var currentArea = fromArea;
+		var path = [];
+		path.push(fromArea);
+		path.push(toArea);
+		while (true){
+			var randomBridge = Util.randomElementOf(currentArea.bridges);
+			if (!Util.contains(path, randomBridge.to)){
+				path.push(randomBridge.to);
+			}
+			if (randomBridge.to == toArea)
+				break;
+			currentArea = randomBridge.to;
+		}
+		return path;
 	}
 	
 }
