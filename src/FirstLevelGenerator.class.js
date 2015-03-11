@@ -37,7 +37,7 @@ FirstLevelGenerator.prototype = {
 		Splitter.connectAreas(areas);
 		for (var i = 0; i < areas.length; i++){
 			var area = areas[i];
-			if (Util.chance(50)){
+			if (Util.chance(70)){
 				area.areaType = 'cavern';
 				area.areaId = 'c1';
 				area.floor = 'cavernFloor';
