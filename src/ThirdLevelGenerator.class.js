@@ -160,12 +160,40 @@ ThirdLevelGenerator.prototype = {
 		//TODO: Link bridge subareas with adjacent areas
 	},
 	carveRoomAt: function(level, area){
+		// Trace corridors from exits
+		for (var i = 0; i < area.bridges.length; i++){
+			var bridge = area.bridges[i];
+			if (bridge.x == area.x){
+				// Left Corridor
+				for (var j = bridge.x; j < bridge.x + area.w / 2; j++){
+					level.cells[j][bridge.y] = area.floor;
+				}
+			} else if (bridge.x == area.x + area.w){
+				// Right corridor
+				for (var j = bridge.x; j >= bridge.x - area.w / 2; j--){
+					level.cells[j][bridge.y] = area.floor;
+				}
+			} else if (bridge.y == area.y){
+				// Top corridor
+				for (var j = bridge.y; j < bridge.y + area.h / 2; j++){
+					level.cells[bridge.x][j] = area.floor;
+				}
+			} else {
+				// Down Corridor
+				for (var j = bridge.y; j >= bridge.y - area.h / 2; j--){
+					level.cells[bridge.x][j] = area.floor;
+				}
+			}
+			//level.cells[bridge.x][bridge.y] = 'water';
+		}
 		var padx = 0;
 		if (area.w > 5)
 			padx = Math.round(Util.rand(0, area.w /6));
 		var pady = 0;
 		if (area.h > 5)
 			pady = Math.round(Util.rand(0, area.h /6));
+		padx = 0;
+		pady = 0;
 		var roomx = area.x + padx;
 		var roomy = area.y + pady;
 		var roomw = area.w - 2 * padx;
@@ -173,7 +201,8 @@ ThirdLevelGenerator.prototype = {
 		for (var x = roomx; x < roomx + roomw; x++){
 			for (var y = roomy; y < roomy + roomh; y++){
 				if (x == roomx || x == roomx + roomw - 1 || y == roomy || y == roomy + roomh - 1){
-					level.cells[x][y] = area.wall;
+					if (level.cells[x][y] != area.floor)
+						level.cells[x][y] = area.wall;
 				} else {
 					if (area.unneeded)
 						level.cells[x][y] = 'water';
@@ -182,15 +211,12 @@ ThirdLevelGenerator.prototype = {
 				}
 			}
 		}
-		for (var i = 0; i < area.bridges.length; i++){
-			var bridge = area.bridges[i];
-			//level.cells[bridge.x][bridge.y] = 'water';
-			//TODO: Link areas with corridors, using bridges (actual bridge position wont matter much, use curved corridors)
-		}
+		
 	},
 	removeUnneededAreas: function(keepAreas, areas, bigArea){
 		// All keep areas should be connected with a single pivot area
 		var pivotArea = Splitter.getAreaAt({x: Math.round(bigArea.x + bigArea.w/2), y: Math.round(bigArea.y + bigArea.h/2)},{x:0,y:0}, areas);
+		pivotArea.unneeded = true;
 		var pathAreas = [];
 		for (var i = 0; i < keepAreas.length; i++){
 			var keepArea = keepAreas[i];
@@ -205,6 +231,16 @@ ThirdLevelGenerator.prototype = {
 		for (var i = 0; i < areas.length; i++){
 			var area = areas[i];
 			if (!Util.contains(pathAreas, area)){
+				bridgesRemove: for (var j = 0; j < area.bridges.length; j++){
+					var bridge = area.bridges[j];
+					for (var k = 0; k < bridge.to.bridges.length; k++){
+						var sourceBridge = bridge.to.bridges[k];
+						if (sourceBridge.x == bridge.x && sourceBridge.y == bridge.y){
+							Util.removeFromArray(bridge.to.bridges, sourceBridge);
+							break bridgesRemove;
+						}
+					}
+				}
 				Util.removeFromArray(areas, area);
 				//area.unneeded = true;
 			}
