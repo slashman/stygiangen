@@ -76,7 +76,7 @@ Generator.prototype = {
 				}else if (cell === 'stoneWall'){
 					color = '#FFFFFF';
 				}else if (cell === 'stoneFloor'){
-					color = '#000000';
+					color = '#BBBBBB';
 				}
 				context.fillStyle = color;
 				context.fillRect(x * zoom, y * zoom, zoom, zoom);
