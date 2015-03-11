@@ -9,9 +9,9 @@ var Splitter = require('./Splitter');
 ThirdLevelGenerator.prototype = {
 	fillLevel: function(sketch, level){
 		this.fillRooms(sketch, level)
-		/*this.fattenCaverns(level);
+		this.fattenCaverns(level);
 		this.placeExits(sketch, level);
-		this.raiseIslands(level);*/
+		this.raiseIslands(level);
 		return level;
 	},
 	fattenCaverns: function(level){
@@ -171,7 +171,7 @@ ThirdLevelGenerator.prototype = {
 				}
 			}
 		}
-		for (var i = 0; i < area.bridges; i++){
+		for (var i = 0; i < area.bridges.length; i++){
 			var bridge = area.bridges[i];
 			level.cells[bridge.x][bridge.y] = 'water';
 		}
