@@ -150,18 +150,29 @@ ThirdLevelGenerator.prototype = {
 				}
 			}
 		}
-		//areas = this.removeUnneededAreas(bridgeAreas, areas, 1);
+		areas = this.removeUnneededAreas(bridgeAreas, areas, 1);
 		for (var i = 0; i < areas.length; i++){
 			var subarea = areas[i];
 			subarea.floor = area.floor;
 			subarea.wall = area.wall;
 			this.carveRoomAt(level, subarea);
 		}
+		//TODO: Link bridge subareas with adjacent areas
 	},
 	carveRoomAt: function(level, area){
-		for (var x = area.x; x < area.x + area.w; x++){
-			for (var y = area.y; y < area.y + area.h; y++){
-				if (x == area.x || x == area.x + area.w - 1 || y == area.y || y == area.y + area.h - 1){
+		var padx = 0;
+		if (area.w > 5)
+			padx = Math.round(Util.rand(0, area.w /6));
+		var pady = 0;
+		if (area.h > 5)
+			pady = Math.round(Util.rand(0, area.h /6));
+		var roomx = area.x + padx;
+		var roomy = area.y + pady;
+		var roomw = area.w - 2 * padx;
+		var roomh = area.h - 2 * pady;
+		for (var x = roomx; x < roomx + roomw; x++){
+			for (var y = roomy; y < roomy + roomh; y++){
+				if (x == roomx || x == roomx + roomw - 1 || y == roomy || y == roomy + roomh - 1){
 					level.cells[x][y] = area.wall;
 				} else {
 					if (area.unneeded)
@@ -173,7 +184,8 @@ ThirdLevelGenerator.prototype = {
 		}
 		for (var i = 0; i < area.bridges.length; i++){
 			var bridge = area.bridges[i];
-			level.cells[bridge.x][bridge.y] = 'water';
+			//level.cells[bridge.x][bridge.y] = 'water';
+			//TODO: Link areas with corridors, using bridges (actual bridge position wont matter much, use curved corridors)
 		}
 	},
 	removeUnneededAreas: function(keepAreas, areas){
@@ -195,7 +207,7 @@ ThirdLevelGenerator.prototype = {
 			var area = areas[i];
 			if (!Util.contains(pathAreas, area)){
 				Util.removeFromArray(areas, area);
-				//area.unneeded = false;
+				//area.unneeded = true;
 			}
 		}
 		return areas;
