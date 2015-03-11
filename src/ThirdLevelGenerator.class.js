@@ -156,50 +156,84 @@ ThirdLevelGenerator.prototype = {
 		}
 	},
 	carveRoomAt: function(level, area){
+		var minbox = {
+			x: area.x + Math.floor(area.w / 2)-1,
+			y: area.y + Math.floor(area.h / 2)-1,
+			x2: area.x + Math.floor(area.w / 2)+1,
+			y2: area.y + Math.floor(area.h / 2)+1,
+		};
 		// Trace corridors from exits
 		for (var i = 0; i < area.bridges.length; i++){
 			var bridge = area.bridges[i];
+			var verticalBridge = false;
+			var horizontalBridge = false;
 			if (bridge.x == area.x){
 				// Left Corridor
+				horizontalBridge = true;
 				for (var j = bridge.x; j < bridge.x + area.w / 2; j++){
 					level.cells[j][bridge.y] = area.corridor;
 				}
 			} else if (bridge.x == area.x + area.w){
 				// Right corridor
+				horizontalBridge = true;
 				for (var j = bridge.x; j >= bridge.x - area.w / 2; j--){
 					level.cells[j][bridge.y] = area.corridor;
 				}
 			} else if (bridge.y == area.y){
 				// Top corridor
+				verticalBridge = true;
 				for (var j = bridge.y; j < bridge.y + area.h / 2; j++){
 					level.cells[bridge.x][j] = area.corridor;
 				}
 			} else {
 				// Down Corridor
+				verticalBridge = true;
 				for (var j = bridge.y; j >= bridge.y - area.h / 2; j--){
 					level.cells[bridge.x][j] = area.corridor;
 				}
 			}
+			if (verticalBridge){
+				if (bridge.x < minbox.x)
+					minbox.x = bridge.x;
+				if (bridge.x > minbox.x2)
+					minbox.x2 = bridge.x;
+			}
+			if (horizontalBridge){
+				if (bridge.y < minbox.y)
+					minbox.y = bridge.y;
+				if (bridge.y > minbox.y2)
+					minbox.y2 = bridge.y;
+			}
 		}
-		var padx = 0;
-		if (area.w > 5)
-			padx = Math.round(Util.rand(0, area.w /6));
-		var pady = 0;
-		if (area.h > 5)
-			pady = Math.round(Util.rand(0, area.h /6));
-		padx = 0;
-		pady = 0;
-		var roomx = area.x + padx;
-		var roomy = area.y + pady;
-		var roomw = area.w - 2 * padx;
-		var roomh = area.h - 2 * pady;
+		var padding = {
+			top: Util.rand(0, minbox.y - area.y),
+			bottom: Util.rand(0, area.y + area.h - minbox.y2),
+			left: Util.rand(0, minbox.x - area.x),
+			right: Util.rand(0, area.x + area.w - minbox.x2)
+		};
+		if (padding.top < 0) padding.top = 0;
+		if (padding.bottom < 0) padding.bottom = 0;
+		if (padding.left < 0) padding.left = 0;
+		if (padding.right < 0) padding.right = 0;
+		var roomx = area.x;
+		var roomy = area.y;
+		var roomw = area.w;
+		var roomh = area.h;
 		for (var x = roomx; x <= roomx + roomw; x++){
 			for (var y = roomy; y <= roomy + roomh; y++){
 				if (x == roomx || x == roomx + roomw || y == roomy || y == roomy + roomh){
 					/*if (level.cells[x][y] != area.floor)
 						level.cells[x][y] = area.wall;*/
 				} else {
-					if (area.marked)
+					if (y < roomy + padding.top){
+						//level.cells[x][y] = 'padding';
+					} else if (x < roomx + padding.left){
+						//level.cells[x][y] = 'padding';
+					} else if (y > roomy + roomh - padding.bottom){
+						//level.cells[x][y] = 'padding';
+					} else if (x > roomx + roomw - padding.right){
+						//level.cells[x][y] = 'padding';
+					} else if (area.marked)
 						level.cells[x][y] = 'water';
 					else
 						level.cells[x][y] = area.floor;
