@@ -2,7 +2,7 @@
 
 Maps are 64x64 tiles
 
-# First Level Generator
+# Level Plan Generator
 
 * Defines the general attributes of the level as well as the interconnected areas map
 * Works by subdivision to fill the whole level.
@@ -43,10 +43,10 @@ Example
 	]
 }
  
-# Second Level Gen 
+# Geological features generator 
 * Plots the level features into a grid (Rivers/Lava)
 
-# Third Level Gen
+# Area Details Generator
 * Fills the areas, making sure its bridges are connected
     * For caves, area is seeded with a drunken digger path.
     * For rooms, one is placed within each bridge, then the area is filled with rooms, then they are randomly connected with nearby ones and every time a check is performed to see they are ALL connected
