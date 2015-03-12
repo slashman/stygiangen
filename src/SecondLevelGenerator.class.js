@@ -44,12 +44,12 @@ SecondLevelGenerator.prototype = {
 			if (surrounding[liquid] > 1 && Util.chance(30))
 				return liquid;
 			return false;
-		}, 1);
+		}, 1, true);
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
-			if (surrounding[liquid] > 0)
+			if (surrounding[liquid] > 1)
 				return liquid;
 			return false;
-		}, 1);
+		}, 1, true);
 	},
 	placeRiverlines: function(level, sketch, liquid){
 		// Place random line segments of water
