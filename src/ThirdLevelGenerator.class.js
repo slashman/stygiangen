@@ -111,7 +111,7 @@ ThirdLevelGenerator.prototype = {
 			for (var j = 0; j < line.length; j++){
 				var point = line[j];
 				var currentCell = level.cells[point.x][point.y];
-				if (currentCell != 'water' /*|| Util.chance(30)*/)
+				// if (currentCell != 'water') This causes a bug if the room is full of water and trying to place an exit, might fix by adding fake water as floor and reliving the CA to build an island around. 
 					level.cells[point.x][point.y] = area.floor;
 			}
 		}
@@ -124,19 +124,21 @@ ThirdLevelGenerator.prototype = {
 			h: area.h
 		}
 		var maxDepth = 2;
-		var MIN_WIDTH = 10;
-		var MIN_HEIGHT = 10;
+		var MIN_WIDTH = 6;
+		var MIN_HEIGHT = 6;
 		var SLICE_RANGE_START = 3/8;
 		var SLICE_RANGE_END = 5/8;
 		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, bigArea.bridges);
-		Splitter.connectAreas(areas);
+		Splitter.connectAreas(areas, area.wall ? 2 : 1); 
 		var bridgeAreas = [];
 		for (var i = 0; i < areas.length; i++){
 			var subarea = areas[i];
 			for (var j = 0; j < area.bridges.length; j++){
 				var bridge = area.bridges[j];
 				if (Splitter.getAreaAt(bridge,{x:0,y:0}, areas) == subarea){
-					bridgeAreas.push(subarea);
+					if (!Util.contains(bridgeAreas, subarea)){
+						bridgeAreas.push(subarea);
+					}
 					subarea.bridges.push({
 						x: bridge.x,
 						y: bridge.y
@@ -283,6 +285,8 @@ ThirdLevelGenerator.prototype = {
 		var path = [];
 		path.push(fromArea);
 		path.push(toArea);
+		if (fromArea == toArea)
+			return path;
 		while (true){
 			var randomBridge = Util.randomElementOf(currentArea.bridges);
 			if (!randomBridge.to)
