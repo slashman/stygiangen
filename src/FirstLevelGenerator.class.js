@@ -41,6 +41,7 @@ FirstLevelGenerator.prototype = {
 				area.areaType = 'cavern';
 				area.areaId = 'c1';
 				area.floor = 'cavernFloor';
+				area.cavernType = Util.chance(50) ? 'rocky' : 'watery';
 			} else {
 				area.areaType = 'rooms';
 				area.areaId = 'c1';

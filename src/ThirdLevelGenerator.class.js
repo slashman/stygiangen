@@ -98,7 +98,7 @@ ThirdLevelGenerator.prototype = {
 				y: Util.rand(area.y, area.y+area.h-1)
 			}
 			var cell = level.cells[randPoint.x][randPoint.y]; 
-			if (cell == area.floor || area.corridor && cell == area.corridor)
+			if (cell == area.floor || area.corridor && cell == area.corridor || cell == 'fakeWater')
 				return randPoint;
 		}
 	},
@@ -114,8 +114,15 @@ ThirdLevelGenerator.prototype = {
 			for (var j = 0; j < line.length; j++){
 				var point = line[j];
 				var currentCell = level.cells[point.x][point.y];
-				// if (currentCell != 'water') This causes a bug if the room is full of water and trying to place an exit, might fix by adding fake water as floor and reliving the CA to build an island around.
+				if (area.cavernType == 'rocky'){
 					level.cells[point.x][point.y] = area.floor;
+				} else {
+					if (currentCell == 'water'){
+						level.cells[point.x][point.y] = 'fakeWater';
+					} else {
+						level.cells[point.x][point.y] = area.floor;
+					}
+				}
 			}
 		}
 		// Scratch the area
@@ -135,7 +142,7 @@ ThirdLevelGenerator.prototype = {
 			for (var j = 0; j < line.length; j++){
 				var point = line[j];
 				var currentCell = level.cells[point.x][point.y];
-				// if (currentCell != 'water') This causes a bug if the room is full of water and trying to place an exit, might fix by adding fake water as floor and reliving the CA to build an island around. 
+				if (currentCell != 'water')  
 					level.cells[point.x][point.y] = area.floor;
 			}
 		}

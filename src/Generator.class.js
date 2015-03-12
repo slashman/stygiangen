@@ -68,6 +68,8 @@ Generator.prototype = {
 				var cell = cells[x][y];
 				if (cell === 'water'){
 					color = '#0000FF';
+				} else if (cell === 'fakeWater'){
+					color = '#0000FF';
 				}else if (cell === 'solidRock'){
 					color = '#594B2D';
 				}else if (cell === 'cavernFloor'){
@@ -100,6 +102,8 @@ Generator.prototype = {
 		var zoom = 8;
 		var water = new Image();
 		water.src = 'img/water.png';
+		var fakeWater = new Image();
+		fakeWater.src = 'img/water.png';
 		var solidRock = new Image();
 		solidRock.src = 'img/solidRock.png';
 		var cavernFloor = new Image();
@@ -116,6 +120,7 @@ Generator.prototype = {
 		bridge.src = 'img/bridge.png';
 		var tiles = {
 			water: water,
+			fakeWater: fakeWater,
 			solidRock: solidRock,
 			cavernFloor: cavernFloor,
 			downstairs: downstairs,
