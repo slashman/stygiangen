@@ -29,6 +29,21 @@ ThirdLevelGenerator.prototype = {
 				return 'cavernFloor';
 			return false;
 		}, 1);
+		// Expand wall-less rooms
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
+			if (current != 'solidRock')
+				return false;
+			if (surrounding['stoneFloor'] > 2 && Util.chance(10))
+				return 'cavernFloor';
+			return false;
+		}, 1);
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
+			if (current != 'solidRock')
+				return false;
+			if (surrounding['stoneFloor'] > 0 && surrounding['cavernFloor']>0)
+				return 'cavernFloor';
+			return false;
+		}, 1, true);
 	},
 	raiseIslands: function(level){
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
