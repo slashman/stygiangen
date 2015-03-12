@@ -44,6 +44,15 @@ ThirdLevelGenerator.prototype = {
 				return 'cavernFloor';
 			return false;
 		}, 1, true);
+		// Deteriorate wall rooms
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
+			if (current != 'stoneWall')
+				return false;
+			if (surrounding['stoneFloor'] > 0 && Util.chance(5))
+				return 'stoneFloor';
+			return false;
+		}, 1, true);
+		
 	},
 	raiseIslands: function(level){
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
