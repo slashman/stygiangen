@@ -55,10 +55,15 @@ FirstLevelGenerator.prototype = {
 		var dist = null;
 		var area1 = null;
 		var area2 = null;
+		var fuse = 1000;
 		do {
 			area1 = Util.randomElementOf(areas);
 			area2 = Util.randomElementOf(areas);
+			if (fuse < 0){
+				break;
+			}
 			dist = Util.lineDistance(area1, area2);
+			fuse--;
 		} while (dist < (this.config.LEVEL_WIDTH + this.config.LEVEL_HEIGHT) / 3);
 		area1.hasExit = true;
 		area2.hasEntrance = true;
