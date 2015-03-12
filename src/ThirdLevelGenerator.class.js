@@ -205,11 +205,14 @@ ThirdLevelGenerator.prototype = {
 					minbox.y2 = bridge.y;
 			}
 		}
+		var minPadding = 0;
+		if (area.wall)
+			minPadding = 1;
 		var padding = {
-			top: Util.rand(0, minbox.y - area.y),
-			bottom: Util.rand(0, area.y + area.h - minbox.y2),
-			left: Util.rand(0, minbox.x - area.x),
-			right: Util.rand(0, area.x + area.w - minbox.x2)
+			top: Util.rand(minPadding, minbox.y - area.y),
+			bottom: Util.rand(minPadding, area.y + area.h - minbox.y2),
+			left: Util.rand(minPadding, minbox.x - area.x),
+			right: Util.rand(minPadding, area.x + area.w - minbox.x2)
 		};
 		if (padding.top < 0) padding.top = 0;
 		if (padding.bottom < 0) padding.bottom = 0;
@@ -219,25 +222,29 @@ ThirdLevelGenerator.prototype = {
 		var roomy = area.y;
 		var roomw = area.w;
 		var roomh = area.h;
-		for (var x = roomx; x <= roomx + roomw; x++){
-			for (var y = roomy; y <= roomy + roomh; y++){
-				if (x == roomx || x == roomx + roomw || y == roomy || y == roomy + roomh){
-					/*if (level.cells[x][y] != area.floor)
-						level.cells[x][y] = area.wall;*/
-				} else {
-					if (y < roomy + padding.top){
-						//level.cells[x][y] = 'padding';
-					} else if (x < roomx + padding.left){
-						//level.cells[x][y] = 'padding';
-					} else if (y > roomy + roomh - padding.bottom){
-						//level.cells[x][y] = 'padding';
-					} else if (x > roomx + roomw - padding.right){
-						//level.cells[x][y] = 'padding';
-					} else if (area.marked)
-						level.cells[x][y] = 'water';
-					else
-						level.cells[x][y] = area.floor;
-				}
+		for (var x = roomx; x < roomx + roomw; x++){
+			for (var y = roomy; y < roomy + roomh; y++){
+				var drawWall = area.wall && level.cells[x][y] != area.corridor; 
+				if (y < roomy + padding.top){
+					if (drawWall && y == roomy + padding.top - 1 && x + 1 >= roomx + padding.left && x <= roomx + roomw - padding.right)
+						level.cells[x][y] = area.wall;
+					//level.cells[x][y] = 'padding';
+				} else if (x < roomx + padding.left){
+					if (drawWall && x == roomx + padding.left - 1 && y >= roomy + padding.top && y <= roomy + roomh - padding.bottom)
+						level.cells[x][y] = area.wall;
+					//level.cells[x][y] = 'padding';
+				} else if (y > roomy + roomh - 1 - padding.bottom){
+					if (drawWall && y == roomy + roomh - padding.bottom && x + 1 >= roomx + padding.left && x <= roomx + roomw - padding.right)
+						level.cells[x][y] = area.wall;
+					//level.cells[x][y] = 'padding';
+				} else if (x > roomx + roomw - 1 - padding.right){
+					if (drawWall && x == roomx + roomw - padding.right && y >= roomy + padding.top && y <= roomy + roomh - padding.bottom)
+						level.cells[x][y] = area.wall;
+					//level.cells[x][y] = 'padding';
+				} else if (area.marked)
+					level.cells[x][y] = 'water';
+				else
+					level.cells[x][y] = area.floor;
 			}
 		}
 		
