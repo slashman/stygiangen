@@ -19,18 +19,21 @@ Generator.prototype = {
 			level: level
 		}
 	},
-	drawSketch: function(level, canvas){
+	drawSketch: function(level, canvas, overlay){
 		var canvas = document.getElementById(canvas);
 		var context = canvas.getContext('2d');
 		context.font="12px Georgia";
-		context.clearRect(0, 0, canvas.width, canvas.height);
+		if (!overlay)
+			context.clearRect(0, 0, canvas.width, canvas.height);
 		var zoom = 8;
 		for (var i = 0; i < level.areas.length; i++){
 			var area = level.areas[i];
 			context.beginPath();
 			context.rect(area.x * zoom, area.y * zoom, area.w * zoom, area.h * zoom);
-			context.fillStyle = 'yellow';
-			context.fill();
+			if (!overlay){
+				context.fillStyle = 'yellow';
+				context.fill();
+			}
 			context.lineWidth = 2;
 			context.strokeStyle = 'black';
 			context.stroke();
@@ -46,7 +49,7 @@ Generator.prototype = {
 			for (var j = 0; j < area.bridges.length; j++){
 				var bridge = area.bridges[j];
 				context.beginPath();
-				context.rect((bridge.x) * zoom - zoom / 2, (bridge.y) * zoom - zoom / 2, zoom, zoom);
+				context.rect((bridge.x) * zoom /*- zoom / 2*/, (bridge.y) * zoom /*- zoom / 2*/, zoom, zoom);
 				context.lineWidth = 2;
 				context.strokeStyle = 'red';
 				context.stroke();

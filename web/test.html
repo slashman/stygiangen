@@ -26,6 +26,7 @@ function generate(many){
 		generator.drawSketch(results.sketch, 'sketchCanvas');
 		//generator.drawLevel(results.level.geo, 'geoCanvas');
 		generator.drawLevel(results.level.cells, 'levelCanvas');
+		generator.drawSketch(results.sketch, 'levelCanvas', true);
 		//generator.drawLevelWithIcons(results.level.cells, 'levelCanvasImage');
 		console.log("Generated "+(i+1));
 	}
