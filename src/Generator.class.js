@@ -22,7 +22,7 @@ Generator.prototype = {
 	drawSketch: function(level, canvas, overlay){
 		var canvas = document.getElementById(canvas);
 		var context = canvas.getContext('2d');
-		context.font="12px Georgia";
+		context.font="16px Avatar";
 		if (!overlay)
 			context.clearRect(0, 0, canvas.width, canvas.height);
 		var zoom = 8;
@@ -39,13 +39,13 @@ Generator.prototype = {
 			context.stroke();
 			var areaDescription = area.areaType;
 			if (area.hasExit){
-				areaDescription += ", down";
+				areaDescription += " (d)";
 			}
 			if (area.hasEntrance){
-				areaDescription += ", up";
+				areaDescription += " (u)";
 			}
-			context.fillStyle = 'black';
-			context.fillText(areaDescription,(area.x + area.w/2)* zoom,(area.y + area.h/2)* zoom);
+			context.fillStyle = 'white';
+			context.fillText(areaDescription,(area.x)* zoom + 5,(area.y )* zoom + 20);
 			for (var j = 0; j < area.bridges.length; j++){
 				var bridge = area.bridges[j];
 				context.beginPath();
@@ -77,9 +77,9 @@ Generator.prototype = {
 				}else if (cell === 'upstairs'){
 					color = '#00FF00';
 				}else if (cell === 'stoneWall'){
-					color = '#FFFFFF';
-				}else if (cell === 'stoneFloor'){
 					color = '#BBBBBB';
+				}else if (cell === 'stoneFloor'){
+					color = '#666666';
 				}else if (cell === 'corridor'){
 					color = '#FF0000';
 				}else if (cell === 'padding'){

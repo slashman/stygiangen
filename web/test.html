@@ -23,7 +23,7 @@ function generate(many){
 		many = 1;
 	for (var i = 0; i < many; i++){
 		var results = generator.generateLevel(1);
-		generator.drawSketch(results.sketch, 'sketchCanvas');
+		//generator.drawSketch(results.sketch, 'sketchCanvas');
 		//generator.drawLevel(results.level.geo, 'geoCanvas');
 		generator.drawLevel(results.level.cells, 'levelCanvas');
 		generator.drawSketch(results.sketch, 'levelCanvas', true);
@@ -32,7 +32,7 @@ function generate(many){
 	}
 }
 </script>
-<canvas id="sketchCanvas" width="512" height="512"></canvas>
+<!-- canvas id="sketchCanvas" width="512" height="512"></canvas-->
 <canvas id="levelCanvas" width="512" height="512"></canvas>
 <!-- canvas id="levelCanvasImage" width="1024" height="1024"></canvas-->
 <input type = "button" value = "Generate" onclick="generate();"/>
