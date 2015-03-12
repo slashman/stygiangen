@@ -128,7 +128,7 @@ ThirdLevelGenerator.prototype = {
 		var MIN_HEIGHT = 6;
 		var SLICE_RANGE_START = 3/8;
 		var SLICE_RANGE_END = 5/8;
-		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, bigArea.bridges);
+		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, area.bridges);
 		Splitter.connectAreas(areas, area.wall ? 2 : 1); 
 		var bridgeAreas = [];
 		for (var i = 0; i < areas.length; i++){
@@ -244,7 +244,7 @@ ThirdLevelGenerator.prototype = {
 						level.cells[x][y] = area.wall;
 					//level.cells[x][y] = 'padding';
 				} else if (area.marked)
-					level.cells[x][y] = 'water';
+					level.cells[x][y] = 'padding';
 				else
 					level.cells[x][y] = area.floor;
 			}

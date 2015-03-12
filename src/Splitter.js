@@ -6,6 +6,7 @@ module.exports = {
 		var bigAreas = [];
 		bigArea.depth = 0;
 		bigAreas.push(bigArea);
+		var retries = 0;
 		while (bigAreas.length > 0){
 			var bigArea = bigAreas.pop();
 			var horizontalSplit = Util.chance(50);
@@ -55,8 +56,18 @@ module.exports = {
 				areas.push(bigArea);
 				continue;
 			}
-			if (avoidPoints && (this.collidesWith(avoidPoints, area2) || this.collidesWith(avoidPoints, area1))) // TODO: This aint working
+			if (avoidPoints && (this.collidesWith(avoidPoints, area2) || this.collidesWith(avoidPoints, area1))){
+				if (retries > 10){
+					bigArea.bridges = [];
+					areas.push(bigArea);
+					retries = 0;
+				} else {
+					// Push back big area
+					bigAreas.push(bigArea);
+					retries++;
+				}		
 				continue; 
+			}
 			if (bigArea.depth == maxDepth){
 				area1.bridges = [];
 				area2.bridges = [];
@@ -74,16 +85,11 @@ module.exports = {
 	collidesWith: function(avoidPoints, area){
 		for (var i = 0; i < avoidPoints.length; i++){
 			var avoidPoint = avoidPoints[i];
-			if (area.x == avoidPoint.x || area.x + area.w == avoidPoint.x){
-				if (Math.abs(area.y - avoidPoint.y) <= 2)
-					return true;
-				if (Math.abs(area.y + area.h - avoidPoint.y) <= 2)
-					return true;
-			} else if (area.y == avoidPoint.y || area.y + area.h == avoidPoint.y){
-				if (Math.abs(area.x - avoidPoint.x) <= 2)
-					return true;
-				if (Math.abs(area.x + area.w - avoidPoint.x) <= 2)
-					return true;
+			if (Util.flatDistance(area.x, area.y, avoidPoint.x, avoidPoint.y) <= 2 ||
+				Util.flatDistance(area.x+area.w, area.y, avoidPoint.x, avoidPoint.y) <= 2 ||
+				Util.flatDistance(area.x, area.y+area.h, avoidPoint.x, avoidPoint.y) <= 2 ||
+				Util.flatDistance(area.x+area.w, area.y+area.h, avoidPoint.x, avoidPoint.y) <= 2){
+				return true;
 			}
 		}
 		return false;
