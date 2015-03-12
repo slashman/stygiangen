@@ -34,7 +34,7 @@ FirstLevelGenerator.prototype = {
 		var SLICE_RANGE_START = this.config.SLICE_RANGE_START;
 		var SLICE_RANGE_END = this.config.SLICE_RANGE_END;
 		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END);
-		Splitter.connectAreas(areas);
+		Splitter.connectAreas(areas,3);
 		for (var i = 0; i < areas.length; i++){
 			var area = areas[i];
 			if (Util.chance(70)){
