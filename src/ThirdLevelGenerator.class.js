@@ -16,15 +16,15 @@ ThirdLevelGenerator.prototype = {
 	},
 	fattenCaverns: function(level){
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
-			if (current === 'water')
-				return false;
+			/*if (current === 'water')
+				return false;*/
 			if (surrounding['cavernFloor'] > 0 && Util.chance(20))
 				return 'cavernFloor';
 			return false;
 		}, 1);
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
-			if (current === 'water')
-				return false;
+			/*if (current === 'water')
+				return false;*/
 			if (surrounding['cavernFloor'] > 1)
 				return 'cavernFloor';
 			return false;
@@ -90,7 +90,7 @@ ThirdLevelGenerator.prototype = {
 			for (var j = 0; j < line.length; j++){
 				var point = line[j];
 				var currentCell = level.cells[point.x][point.y];
-				if (currentCell != 'water' /*|| Util.chance(30)*/)
+				// if (currentCell != 'water') This causes a bug if the room is full of water and trying to place an exit, might fix by adding fake water as floor and reliving the CA to build an island around.
 					level.cells[point.x][point.y] = area.floor;
 			}
 		}
