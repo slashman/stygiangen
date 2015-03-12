@@ -1,3 +1,12 @@
+Based on the original uiv abyss
+Level 1
+* Caverns with lava and fire lizards, with bridges crossing the lava
+* Corridors with force fields and daemons
+
+Level 2
+* Lagoons with nixies, octopus, sea serpents, and islands with daemons, hydras, balrons
+
+https://www.youtube.com/watch?v=rs8ZYAlglsY&t=1324
 
 
 Maps are 64x64 tiles

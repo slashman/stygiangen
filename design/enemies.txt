@@ -1,0 +1,59 @@
+Based on the original uiv enemies
+
+Level 1
+* Lava lizard
+* Hydra
+- Giant Rat
+* Daemon
+- Giant Spider
+
+Level 2
+* Sea Serpent
+* Daemon
+* Hydra
+
+
+Level 5
+* Zorn
+* Headless
+* Daemon
+* Lava Lizard
+* Balron
+* Reaper
+* Gazer
+* Phantom
+
+Level 6
+* Nixie
+* Balron
+* Daemon
+* Hydra
+* Reaper
+* Mage (Camp)
+* Giant Bat
+* Sea Serpent
+* Water Elemental (?)
+* Headless
+
+Level 7
+* Phantom
+* Skeleton
+* Balron
+* Daemon
+* Ghost
+* Wisp
+
+Level 8
+* Party of 8 adventurers
+* Gazers
+* Balron
+* Daemon
+* Dragon
+* Lava Lizard
+* Ghost
+* Liche
+* Skeleton
+* Mage
+* Giant Spider
+* Giant Bat
+* Sea Serpent
