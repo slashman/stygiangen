@@ -99,7 +99,6 @@ module.exports = {
 		if (!border){
 			border = 1;
 		}
-		border = 1;
 		var connectedAreas = [];
 		var randomArea = Util.randomElementOf(areas);
 		connectedAreas.push(randomArea);

@@ -211,10 +211,10 @@ ThirdLevelGenerator.prototype = {
 		if (area.wall)
 			minPadding = 1;
 		var padding = {
-			top: Util.rand(minPadding, minbox.y - area.y),
-			bottom: Util.rand(minPadding, area.y + area.h - minbox.y2),
-			left: Util.rand(minPadding, minbox.x - area.x),
-			right: Util.rand(minPadding, area.x + area.w - minbox.x2)
+			top: Util.rand(minPadding, minbox.y - area.y - minPadding),
+			bottom: Util.rand(minPadding, area.y + area.h - minbox.y2 - minPadding),
+			left: Util.rand(minPadding, minbox.x - area.x - minPadding),
+			right: Util.rand(minPadding, area.x + area.w - minbox.x2 - minPadding)
 		};
 		if (padding.top < 0) padding.top = 0;
 		if (padding.bottom < 0) padding.bottom = 0;
