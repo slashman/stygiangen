@@ -173,10 +173,14 @@ ThirdLevelGenerator.prototype = {
 				// Left Corridor
 				horizontalBridge = true;
 				for (var j = bridge.x; j < bridge.x + area.w / 2; j++){
-					level.cells[j][bridge.y] = area.corridor;
 					if (area.wall){
 						if (level.cells[j][bridge.y-1] != area.corridor) level.cells[j][bridge.y-1] = area.wall;
 						if (level.cells[j][bridge.y+1] != area.corridor) level.cells[j][bridge.y+1] = area.wall;
+					}
+					if (level.cells[j][bridge.y] == 'water'){ 
+						level.cells[j][bridge.y] = 'bridge';
+					} else {
+						level.cells[j][bridge.y] = area.corridor;
 					}
 						
 				}
@@ -184,30 +188,42 @@ ThirdLevelGenerator.prototype = {
 				// Right corridor
 				horizontalBridge = true;
 				for (var j = bridge.x; j >= bridge.x - area.w / 2; j--){
-					level.cells[j][bridge.y] = area.corridor;
 					if (area.wall){
 						if (level.cells[j][bridge.y-1] != area.corridor) level.cells[j][bridge.y-1] = area.wall;
 						if (level.cells[j][bridge.y+1] != area.corridor) level.cells[j][bridge.y+1] = area.wall;
+					} 
+					if (level.cells[j][bridge.y] == 'water'){ 
+						level.cells[j][bridge.y] = 'bridge';
+					} else {
+						level.cells[j][bridge.y] = area.corridor;
 					}
 				}
 			} else if (bridge.y == area.y){
 				// Top corridor
 				verticalBridge = true;
 				for (var j = bridge.y; j < bridge.y + area.h / 2; j++){
-					level.cells[bridge.x][j] = area.corridor;
 					if (area.wall){
 						if (level.cells[bridge.x-1][j] != area.corridor) level.cells[bridge.x-1][j] = area.wall;
 						if (level.cells[bridge.x+1][j] != area.corridor) level.cells[bridge.x+1][j] = area.wall;
+					} 
+					if (level.cells[bridge.x][j] == 'water'){ 
+						level.cells[bridge.x][j] = 'bridge';
+					} else {
+						level.cells[bridge.x][j] = area.corridor;
 					}
 				}
 			} else {
 				// Down Corridor
 				verticalBridge = true;
 				for (var j = bridge.y; j >= bridge.y - area.h / 2; j--){
-					level.cells[bridge.x][j] = area.corridor;
 					if (area.wall){
 						if (level.cells[bridge.x-1][j] != area.corridor) level.cells[bridge.x-1][j] = area.wall;
 						if (level.cells[bridge.x+1][j] != area.corridor) level.cells[bridge.x+1][j] = area.wall; 
+					} 
+					if (level.cells[bridge.x][j] == 'water'){ 
+						level.cells[bridge.x][j] = 'bridge';
+					} else {
+						level.cells[bridge.x][j] = area.corridor;
 					}
 				}
 			}
@@ -243,7 +259,7 @@ ThirdLevelGenerator.prototype = {
 		var roomh = area.h;
 		for (var x = roomx; x < roomx + roomw; x++){
 			for (var y = roomy; y < roomy + roomh; y++){
-				var drawWall = area.wall && level.cells[x][y] != area.corridor; 
+				var drawWall = area.wall && level.cells[x][y] != area.corridor && level.cells[x][y] != 'bridge'; 
 				if (y < roomy + padding.top){
 					if (drawWall && y == roomy + padding.top - 1 && x + 1 >= roomx + padding.left && x <= roomx + roomw - padding.right)
 						level.cells[x][y] = area.wall;

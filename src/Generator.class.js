@@ -84,6 +84,8 @@ Generator.prototype = {
 					color = '#FF0000';
 				}else if (cell === 'padding'){
 					color = '#00FF00';
+				}else if (cell === 'bridge'){
+					color = '#946800';
 				}
 				context.fillStyle = color;
 				context.fillRect(x * zoom, y * zoom, zoom, zoom);
@@ -110,6 +112,8 @@ Generator.prototype = {
 		stoneWall.src = 'img/stoneWall.png';
 		var stoneFloor = new Image();
 		stoneFloor.src = 'img/stoneFloor.png';
+		var bridge = new Image();
+		bridge.src = 'img/bridge.png';
 		var tiles = {
 			water: water,
 			solidRock: solidRock,
@@ -117,7 +121,8 @@ Generator.prototype = {
 			downstairs: downstairs,
 			upstairs: upstairs,
 			stoneWall: stoneWall,
-			stoneFloor: stoneFloor
+			stoneFloor: stoneFloor,
+			bridge: bridge
 		}
 	      
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
