@@ -5,8 +5,8 @@
 <body>
 <script type="text/javascript">
 var generator = new Generator({
-	MIN_WIDTH: 32,
-	MIN_HEIGHT: 32,
+	MIN_WIDTH: 10,
+	MIN_HEIGHT: 10,
 	LEVEL_WIDTH: 64,
 	LEVEL_HEIGHT: 64,
 	SUBDIVISION_DEPTH: 3,
@@ -18,17 +18,24 @@ var generator = new Generator({
 	MIN_RIVERS: 3,
 	MAX_RIVERS: 5
 });
-function generate(){
-	var results = generator.generateLevel(1);
-	generator.drawSketch(results.sketch, 'sketchCanvas');
-	//generator.drawLevel(results.level.geo, 'geoCanvas');
-	generator.drawLevel(results.level.cells, 'levelCanvas');
-	generator.drawLevelWithIcons(results.level.cells, 'levelCanvasImage');
+function generate(many){
+	if (!many)
+		many = 1;
+	for (var i = 0; i < many; i++){
+		var results = generator.generateLevel(1);
+		generator.drawSketch(results.sketch, 'sketchCanvas');
+		//generator.drawLevel(results.level.geo, 'geoCanvas');
+		generator.drawLevel(results.level.cells, 'levelCanvas');
+		//generator.drawLevelWithIcons(results.level.cells, 'levelCanvasImage');
+		console.log("Generated "+(i+1));
+	}
 }
 </script>
 <canvas id="sketchCanvas" width="512" height="512"></canvas>
 <canvas id="levelCanvas" width="512" height="512"></canvas>
-<canvas id="levelCanvasImage" width="1024" height="1024"></canvas>
+<!-- canvas id="levelCanvasImage" width="1024" height="1024"></canvas-->
 <input type = "button" value = "Generate" onclick="generate();"/>
+<input type = "button" value = "Generate 50" onclick="generate(50);"/>
+<input type = "button" value = "Generate 1000" onclick="generate(1000);"/>
 </body>
 </html>
