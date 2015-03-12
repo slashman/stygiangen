@@ -174,24 +174,41 @@ ThirdLevelGenerator.prototype = {
 				horizontalBridge = true;
 				for (var j = bridge.x; j < bridge.x + area.w / 2; j++){
 					level.cells[j][bridge.y] = area.corridor;
+					if (area.wall){
+						if (level.cells[j][bridge.y-1] != area.corridor) level.cells[j][bridge.y-1] = area.wall;
+						if (level.cells[j][bridge.y+1] != area.corridor) level.cells[j][bridge.y+1] = area.wall;
+					}
+						
 				}
 			} else if (bridge.x == area.x + area.w){
 				// Right corridor
 				horizontalBridge = true;
 				for (var j = bridge.x; j >= bridge.x - area.w / 2; j--){
 					level.cells[j][bridge.y] = area.corridor;
+					if (area.wall){
+						if (level.cells[j][bridge.y-1] != area.corridor) level.cells[j][bridge.y-1] = area.wall;
+						if (level.cells[j][bridge.y+1] != area.corridor) level.cells[j][bridge.y+1] = area.wall;
+					}
 				}
 			} else if (bridge.y == area.y){
 				// Top corridor
 				verticalBridge = true;
 				for (var j = bridge.y; j < bridge.y + area.h / 2; j++){
 					level.cells[bridge.x][j] = area.corridor;
+					if (area.wall){
+						if (level.cells[bridge.x-1][j] != area.corridor) level.cells[bridge.x-1][j] = area.wall;
+						if (level.cells[bridge.x+1][j] != area.corridor) level.cells[bridge.x+1][j] = area.wall;
+					}
 				}
 			} else {
 				// Down Corridor
 				verticalBridge = true;
 				for (var j = bridge.y; j >= bridge.y - area.h / 2; j--){
 					level.cells[bridge.x][j] = area.corridor;
+					if (area.wall){
+						if (level.cells[bridge.x-1][j] != area.corridor) level.cells[bridge.x-1][j] = area.wall;
+						if (level.cells[bridge.x+1][j] != area.corridor) level.cells[bridge.x+1][j] = area.wall; 
+					}
 				}
 			}
 			if (verticalBridge){
