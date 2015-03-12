@@ -37,7 +37,14 @@ Generator.prototype = {
 			context.lineWidth = 2;
 			context.strokeStyle = 'black';
 			context.stroke();
-			var areaDescription = area.areaType;
+			var areaDescription = '';
+			if (area.areaType == 'rooms'){
+				areaDescription = "Dungeon";
+			} else if (area.floor == 'fakeWater'){ 
+				areaDescription = "Lagoon";
+			} else {
+				areaDescription = "Cavern";
+			}
 			if (area.hasExit){
 				areaDescription += " (d)";
 			}

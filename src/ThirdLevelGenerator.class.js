@@ -15,20 +15,30 @@ ThirdLevelGenerator.prototype = {
 		return level;
 	},
 	fattenCaverns: function(level){
+		// Grow caverns
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
-			/*if (current === 'water')
-				return false;*/
 			if (surrounding['cavernFloor'] > 0 && Util.chance(20))
 				return 'cavernFloor';
 			return false;
 		}, 1, true);
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
-			/*if (current === 'water')
-				return false;*/
 			if (surrounding['cavernFloor'] > 1)
 				return 'cavernFloor';
 			return false;
 		}, 1, true);
+		// Grow lagoon areas
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
+			if (surrounding['fakeWater'] > 0 && Util.chance(40))
+				return 'fakeWater';
+			return false;
+		}, 1, true);
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
+			if (surrounding['fakeWater'] > 0)
+				return 'fakeWater';
+			return false;
+		}, 1, true);
+		
+		
 		// Expand wall-less rooms
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
 			if (current != 'solidRock')
@@ -63,6 +73,16 @@ ThirdLevelGenerator.prototype = {
 				return 'cavernFloor';
 			return false;
 		}, 1, true);
+		// Island for exits on water
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
+			if (current != 'fakeWater' && current != 'water')
+				return false;
+			var stairs = surrounding['downstairs'] ? surrounding['downstairs'] : 0 +
+					surrounding['upstairs'] ? surrounding['upstairs'] : 0; 
+			if (stairs > 0)
+				return 'cavernFloor';
+			return false;
+		}, 1);
 	},
 	fillRooms: function(sketch, level){
 		for (var i = 0; i < sketch.areas.length; i++){

@@ -37,10 +37,10 @@ FirstLevelGenerator.prototype = {
 		Splitter.connectAreas(areas,3);
 		for (var i = 0; i < areas.length; i++){
 			var area = areas[i];
-			if (Util.chance(70)){
+			if (Util.chance(70)){ //TODO: Define areas based on depth
 				area.areaType = 'cavern';
 				area.areaId = 'c1';
-				area.floor = 'cavernFloor';
+				area.floor = Util.chance(50)?'fakeWater':'cavernFloor';
 				area.cavernType = Util.chance(50) ? 'rocky' : 'watery';
 			} else {
 				area.areaType = 'rooms';
