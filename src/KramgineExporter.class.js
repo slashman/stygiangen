@@ -35,6 +35,28 @@ KramgineExporter.prototype = {
         "dir":0,
         "fy":0
     },
+    WATER_TILE: {
+    	"w":0,
+    	"y":0,
+    	"h":2,
+    	"c":2,
+    	"f":101,
+    	"ch":2,
+    	"sl":0,
+    	"dir":0,
+    	"fy":0
+	},
+	LAVA_TILE: {
+    	"w":0,
+    	"y":0,
+    	"h":2,
+    	"c":2,
+    	"f":101,
+    	"ch":2,
+    	"sl":0,
+    	"dir":0,
+    	"fy":0
+	},
 	getTiles: function(){
 		return [
 	        null, 
@@ -46,8 +68,8 @@ KramgineExporter.prototype = {
 	        this.BASIC_FLOOR_TILE,
 	        this.BASIC_FLOOR_TILE,
 	        this.BASIC_FLOOR_TILE,
-	        this.BASIC_FLOOR_TILE,
-	        this.BASIC_FLOOR_TILE
+	        this.LAVA_TILE,
+	        this.WATER_TILE
 		];
 	},
 	getObjects: function(level){
