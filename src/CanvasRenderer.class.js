@@ -143,6 +143,8 @@ CanvasRenderer.prototype = {
 		stoneFloor.src = 'img/stoneFloor.png';
 		var bridge = new Image();
 		bridge.src = 'img/bridge.png';
+		var lava = new Image();
+		lava.src = 'img/lava.png';
 		var tiles = {
 			water: water,
 			fakeWater: fakeWater,
@@ -152,7 +154,8 @@ CanvasRenderer.prototype = {
 			upstairs: upstairs,
 			stoneWall: stoneWall,
 			stoneFloor: stoneFloor,
-			bridge: bridge
+			bridge: bridge,
+			lava: lava
 		}
 	      
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
