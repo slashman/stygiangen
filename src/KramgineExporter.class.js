@@ -33,6 +33,8 @@ KramgineExporter.prototype = {
 					id = 7;
 				}else if (cell === 'bridge'){
 					id = 8;
+				}else if (cell === 'lava'){
+					id = 9;
 				}
 				map[x][y] = id;
 			}

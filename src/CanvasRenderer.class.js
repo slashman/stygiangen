@@ -60,6 +60,8 @@ CanvasRenderer.prototype = {
 				var cell = cells[x][y];
 				if (cell === 'water'){
 					color = '#0000FF';
+				} else if (cell === 'lava'){
+					color = '#FF0000';
 				} else if (cell === 'fakeWater'){
 					color = '#0000FF';
 				}else if (cell === 'solidRock'){

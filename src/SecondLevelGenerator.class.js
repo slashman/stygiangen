@@ -11,7 +11,7 @@ SecondLevelGenerator.prototype = {
 		var level = new Level(this.config);
 		level.init();
 		this.fillStrata(level, sketch);
-		if (sketch.hasRivers || true)
+		if (sketch.hasRivers)
 			this.plotRivers(level, sketch, 'water');
 		if (sketch.hasLava)
 			this.plotRivers(level, sketch, 'lava');
@@ -38,6 +38,8 @@ SecondLevelGenerator.prototype = {
 	plotRivers: function(level, sketch, liquid){
 		this.placeRiverlines(level, sketch, liquid);
 		this.fattenRivers(level, liquid);
+		if (liquid == 'lava')
+			this.fattenRivers(level, liquid);
 	},
 	fattenRivers: function(level, liquid){
 		level.cells = CA.runCA(level.cells, function(current, surrounding){

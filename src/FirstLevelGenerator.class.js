@@ -9,11 +9,14 @@ FirstLevelGenerator.prototype = {
 	generateLevel: function(depth){
 		var hasRiver = depth < 6 && Util.chance(100 - depth * 15);
 		var hasLava = depth > 5 && Util.chance(depth * 10 + 20);
+		hasLava = Util.chance(50);
+		hasRiver = Util.chance(50);
+		
 		var mainEntrance = depth == 1;
-		var areas = this.generateAreas();
+		var areas = this.generateAreas(hasLava);
 		this.placeExits(areas);
 		var level = {
-			hasRiver: hasRiver,
+			hasRivers: hasRiver,
 			hasLava: hasLava,
 			mainEntrance: mainEntrance,
 			strata: 'solidRock',
@@ -21,7 +24,7 @@ FirstLevelGenerator.prototype = {
 		}
 		return level;
 	},
-	generateAreas: function(){
+	generateAreas: function(hasLava){
 		var bigArea = {
 			x: 0,
 			y: 0,
@@ -42,8 +45,13 @@ FirstLevelGenerator.prototype = {
 			if (Util.chance(70)){ //TODO: Define areas based on depth
 				area.areaType = 'cavern';
 				area.areaId = 'c1';
-				area.floor = Util.chance(50)?'fakeWater':'cavernFloor';
-				area.cavernType = Util.chance(50) ? 'rocky' : 'watery';
+				if (hasLava){
+					area.floor = 'cavernFloor';
+					area.cavernType = 'rocky';
+				} else {
+					area.floor = Util.chance(50)?'fakeWater':'cavernFloor';
+					area.cavernType = Util.chance(50) ? 'rocky' : 'watery';
+				}
 			} else {
 				area.areaType = 'rooms';
 				area.areaId = 'c1';

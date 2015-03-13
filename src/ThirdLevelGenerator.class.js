@@ -219,7 +219,7 @@ ThirdLevelGenerator.prototype = {
 						if (level.cells[j][bridge.y-1] != area.corridor) level.cells[j][bridge.y-1] = area.wall;
 						if (level.cells[j][bridge.y+1] != area.corridor) level.cells[j][bridge.y+1] = area.wall;
 					}
-					if (level.cells[j][bridge.y] == 'water'){ 
+					if (level.cells[j][bridge.y] == 'water' || level.cells[j][bridge.y] == 'lava'){ 
 						level.cells[j][bridge.y] = 'bridge';
 					} else {
 						level.cells[j][bridge.y] = area.corridor;
@@ -234,7 +234,7 @@ ThirdLevelGenerator.prototype = {
 						if (level.cells[j][bridge.y-1] != area.corridor) level.cells[j][bridge.y-1] = area.wall;
 						if (level.cells[j][bridge.y+1] != area.corridor) level.cells[j][bridge.y+1] = area.wall;
 					} 
-					if (level.cells[j][bridge.y] == 'water'){ 
+					if (level.cells[j][bridge.y] == 'water' || level.cells[j][bridge.y] == 'lava'){ 
 						level.cells[j][bridge.y] = 'bridge';
 					} else {
 						level.cells[j][bridge.y] = area.corridor;
@@ -248,7 +248,7 @@ ThirdLevelGenerator.prototype = {
 						if (level.cells[bridge.x-1][j] != area.corridor) level.cells[bridge.x-1][j] = area.wall;
 						if (level.cells[bridge.x+1][j] != area.corridor) level.cells[bridge.x+1][j] = area.wall;
 					} 
-					if (level.cells[bridge.x][j] == 'water'){ 
+					if (level.cells[bridge.x][j] == 'water' || level.cells[bridge.x][j] == 'lava'){ 
 						level.cells[bridge.x][j] = 'bridge';
 					} else {
 						level.cells[bridge.x][j] = area.corridor;
@@ -262,7 +262,7 @@ ThirdLevelGenerator.prototype = {
 						if (level.cells[bridge.x-1][j] != area.corridor) level.cells[bridge.x-1][j] = area.wall;
 						if (level.cells[bridge.x+1][j] != area.corridor) level.cells[bridge.x+1][j] = area.wall; 
 					} 
-					if (level.cells[bridge.x][j] == 'water'){ 
+					if (level.cells[bridge.x][j] == 'water' || level.cells[bridge.x][j] == 'lava'){ 
 						level.cells[bridge.x][j] = 'bridge';
 					} else {
 						level.cells[bridge.x][j] = area.corridor;
