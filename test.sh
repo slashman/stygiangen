@@ -1,0 +1,1 @@
+watchify --debug src/WebTest.js -o web/stygianGen.js

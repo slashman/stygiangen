@@ -4,7 +4,8 @@
 </head>
 <body>
 <script type="text/javascript">
-var generator = new Generator({
+
+var config = {
 	MIN_WIDTH: 10,
 	MIN_HEIGHT: 10,
 	MAX_WIDTH: 20,
@@ -19,17 +20,21 @@ var generator = new Generator({
 	MAX_RIVER_SEGMENTS: 20,
 	MIN_RIVERS: 3,
 	MAX_RIVERS: 5
-});
+};
+
+var generator = new Generator(config);
+var canvasRenderer = new CanvasRenderer(config);
+
 function generate(many){
 	if (!many)
 		many = 1;
 	for (var i = 0; i < many; i++){
 		var results = generator.generateLevel(1);
-		//generator.drawSketch(results.sketch, 'sketchCanvas');
-		//generator.drawLevel(results.level.geo, 'geoCanvas');
-		generator.drawLevel(results.level.cells, 'levelCanvas');
-		generator.drawSketch(results.sketch, 'levelCanvas', true);
-		//generator.drawLevelWithIcons(results.level.cells, 'levelCanvasImage');
+		//canvasRenderer.drawSketch(results.sketch, 'sketchCanvas');
+		//canvasRenderer.drawLevel(results.level.geo, 'geoCanvas');
+		canvasRenderer.drawLevel(results.level.cells, 'levelCanvas');
+		canvasRenderer.drawSketch(results.sketch, 'levelCanvas', true);
+		//canvasRenderer.drawLevelWithIcons(results.level.cells, 'levelCanvasImage');
 		console.log("Generated "+(i+1));
 	}
 }
