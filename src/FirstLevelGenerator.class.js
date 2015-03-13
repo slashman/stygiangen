@@ -31,9 +31,11 @@ FirstLevelGenerator.prototype = {
 		var maxDepth = this.config.SUBDIVISION_DEPTH;
 		var MIN_WIDTH = this.config.MIN_WIDTH;
 		var MIN_HEIGHT = this.config.MIN_HEIGHT;
+		var MAX_WIDTH = this.config.MAX_WIDTH;
+		var MAX_HEIGHT = this.config.MAX_HEIGHT;
 		var SLICE_RANGE_START = this.config.SLICE_RANGE_START;
 		var SLICE_RANGE_END = this.config.SLICE_RANGE_END;
-		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END);
+		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, MAX_WIDTH, MAX_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END);
 		Splitter.connectAreas(areas,3);
 		for (var i = 0; i < areas.length; i++){
 			var area = areas[i];

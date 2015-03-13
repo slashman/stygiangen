@@ -177,9 +177,11 @@ ThirdLevelGenerator.prototype = {
 		var maxDepth = 2;
 		var MIN_WIDTH = 6;
 		var MIN_HEIGHT = 6;
+		var MAX_WIDTH = 10;
+		var MAX_HEIGHT = 10;
 		var SLICE_RANGE_START = 3/8;
 		var SLICE_RANGE_END = 5/8;
-		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, area.bridges);
+		var areas = Splitter.subdivideArea(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, MAX_WIDTH, MAX_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, area.bridges);
 		Splitter.connectAreas(areas, area.wall ? 2 : 1); 
 		var bridgeAreas = [];
 		for (var i = 0; i < areas.length; i++){

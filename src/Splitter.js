@@ -1,7 +1,7 @@
 var Util = require('./Utils');
 
 module.exports = {
-	subdivideArea: function(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, avoidPoints){
+	subdivideArea: function(bigArea, maxDepth, MIN_WIDTH, MIN_HEIGHT, MAX_WIDTH, MAX_HEIGHT, SLICE_RANGE_START, SLICE_RANGE_END, avoidPoints){
 		var areas = [];
 		var bigAreas = [];
 		bigArea.depth = 0;
@@ -56,8 +56,18 @@ module.exports = {
 				areas.push(bigArea);
 				continue;
 			}
+			if (bigArea.depth == maxDepth && 
+					(area1.w > MAX_WIDTH || area1.h > MAX_HEIGHT ||
+					area2.w > MAX_WIDTH || area2.h > MAX_HEIGHT)){
+				if (retries < 100) {
+					// Push back big area
+					bigAreas.push(bigArea);
+					retries++;
+					continue;
+				}		
+			}
 			if (avoidPoints && (this.collidesWith(avoidPoints, area2) || this.collidesWith(avoidPoints, area1))){
-				if (retries > 10){
+				if (retries > 100){
 					bigArea.bridges = [];
 					areas.push(bigArea);
 					retries = 0;
