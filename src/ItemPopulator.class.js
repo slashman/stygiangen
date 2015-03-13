@@ -12,10 +12,16 @@ ItemPopulator.prototype = {
 		}
 	},
 	populateArea: function(area, level){
-		for (var i = 0; i < area.items.length; i++){
+		var items = Util.rand(0,2);
+		for (var i = 0; i < items; i++){
 			var position = level.getFreePlace(area);
-			level.addItem(area.items[i], position.x, position.y);
+			var item = this.getAnItem(level.depth);
+			level.addItem(item, position.x, position.y);
 		}
+	},
+	ITEMS: ['dagger'],
+	getAnItem: function(depth){
+		return Util.randomElementOf(this.ITEMS);
 	}
 }
 

@@ -76,7 +76,9 @@ FirstLevelGenerator.prototype = {
 			hasLava: hasLava,
 			mainEntrance: mainEntrance,
 			strata: 'solidRock',
-			areas: areas
+			areas: areas,
+			depth: depth
+			
 		} 
 		return level;
 	},
@@ -130,11 +132,6 @@ FirstLevelGenerator.prototype = {
 		area.enemyCount = randomGang.quantity + Util.rand(0,3);
 		if (randomGang)
 			area.boss = randomGang.boss;
-		/*
-		var itemCount = Util.rand(3,5);
-		for (var j = 0; j < itemCount; j++)
-			area.items.push(Util.randomElementOf(['hpPotion', 'protection', 'dagger', 'shortSword']))
-		*/
 	},
 	placeExits: function(areas){
 		var dist = null;
