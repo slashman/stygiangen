@@ -24,19 +24,26 @@ var config = {
 
 var generator = new Generator(config);
 var canvasRenderer = new CanvasRenderer(config);
+var kramgineExporter = new KramgineExporter(config);
+
+var generatedLevel = null;
 
 function generate(many){
 	if (!many)
 		many = 1;
 	for (var i = 0; i < many; i++){
-		var results = generator.generateLevel(1);
-		//canvasRenderer.drawSketch(results.sketch, 'sketchCanvas');
-		//canvasRenderer.drawLevel(results.level.geo, 'geoCanvas');
-		canvasRenderer.drawLevel(results.level.cells, 'levelCanvas');
-		canvasRenderer.drawSketch(results.sketch, 'levelCanvas', true);
-		//canvasRenderer.drawLevelWithIcons(results.level.cells, 'levelCanvasImage');
+		generatedLevel = generator.generateLevel(1);
+		//canvasRenderer.drawSketch(generatedLevel.sketch, 'sketchCanvas');
+		//canvasRenderer.drawLevel(generatedLevel.level.geo, 'geoCanvas');
+		canvasRenderer.drawLevel(generatedLevel.level.cells, 'levelCanvas');
+		canvasRenderer.drawSketch(generatedLevel.sketch, 'levelCanvas', true);
+		//canvasRenderer.drawLevelWithIcons(generatedLevel.level.cells, 'levelCanvasImage');
 		console.log("Generated "+(i+1));
 	}
+}
+
+function exportToKramgine(){
+	console.log(kramgineExporter.getLevel(generatedLevel.level))
 }
 </script>
 <!-- canvas id="sketchCanvas" width="512" height="512"></canvas-->
@@ -45,5 +52,6 @@ function generate(many){
 <input type = "button" value = "Generate" onclick="generate();"/>
 <input type = "button" value = "Generate 50" onclick="generate(50);"/>
 <input type = "button" value = "Generate 1000" onclick="generate(1000);"/>
+<input type = "button" value = "Export to KramGine (tm)" onclick="exportToKramgine();"/>
 </body>
 </html>
