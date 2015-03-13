@@ -47,10 +47,10 @@ FirstLevelGenerator.prototype = {
 				area.areaId = 'c1';
 				if (hasLava){
 					area.floor = 'cavernFloor';
-					area.cavernType = 'rocky';
+					area.cavernType = Util.randomElementOf(['rocky','bridges']);
 				} else {
 					area.floor = Util.chance(50)?'fakeWater':'cavernFloor';
-					area.cavernType = Util.chance(50) ? 'rocky' : 'watery';
+					area.cavernType = Util.randomElementOf(['rocky','bridges','watery']);
 				}
 			} else {
 				area.areaType = 'rooms';
