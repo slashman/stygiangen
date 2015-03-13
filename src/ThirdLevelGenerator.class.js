@@ -125,15 +125,13 @@ ThirdLevelGenerator.prototype = {
 				var currentCell = level.cells[point.x][point.y];
 				if (area.cavernType == 'rocky')
 					level.cells[point.x][point.y] = area.floor;
-				else {
-					if (currentCell == 'water' || currentCell == 'lava'){
-						if (area.cavernType == 'bridges')
-							level.cells[point.x][point.y] = 'bridge';
-						else
-							level.cells[point.x][point.y] = 'fakeWater';
-					} else {
-						level.cells[point.x][point.y] = area.floor;
-					}
+				else if (currentCell == 'water' || currentCell == 'lava'){
+					if (area.floor != 'fakeWater' && area.cavernType == 'bridges')
+						level.cells[point.x][point.y] = 'bridge';
+					else
+						level.cells[point.x][point.y] = 'fakeWater';
+				} else {
+					level.cells[point.x][point.y] = area.floor;
 				}
 			}
 		}
