@@ -107,19 +107,8 @@ ThirdLevelGenerator.prototype = {
 			if (area.hasEntrance){
 				tile = 'upstairs';
 			}
-			var freeSpot = this.getFreeSpot(level, area);
+			var freeSpot = level.getFreePlace(area);
 			level.cells[freeSpot.x][freeSpot.y] = tile;
-		}
-	},
-	getFreeSpot: function(level, area){
-		while(true){
-			var randPoint = {
-				x: Util.rand(area.x, area.x+area.w-1),
-				y: Util.rand(area.y, area.y+area.h-1)
-			}
-			var cell = level.cells[randPoint.x][randPoint.y]; 
-			if (cell == area.floor || area.corridor && cell == area.corridor || cell == 'fakeWater')
-				return randPoint;
 		}
 	},
 	fillWithCavern: function(level, area){

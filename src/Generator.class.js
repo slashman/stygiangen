@@ -4,12 +4,14 @@ function Generator(config){
 	this.secondLevelGenerator = new SecondLevelGenerator(config);
 	this.thirdLevelGenerator = new ThirdLevelGenerator(config);
 	this.monsterPopulator = new MonsterPopulator(config);
+	this.itemPopulator = new ItemPopulator(config);
 }
 
 var FirstLevelGenerator = require('./FirstLevelGenerator.class');
 var SecondLevelGenerator = require('./SecondLevelGenerator.class');
 var ThirdLevelGenerator = require('./ThirdLevelGenerator.class');
 var MonsterPopulator = require('./MonsterPopulator.class');
+var ItemPopulator = require('./ItemPopulator.class');
 
 Generator.prototype = {
 	generateLevel: function(depth){
@@ -17,6 +19,7 @@ Generator.prototype = {
 		var level = this.secondLevelGenerator.fillLevel(sketch);
 		this.thirdLevelGenerator.fillLevel(sketch, level);
 		this.monsterPopulator.populateLevel(sketch, level);
+		this.itemPopulator.populateLevel(sketch, level);
 		return {
 			sketch: sketch,
 			level: level

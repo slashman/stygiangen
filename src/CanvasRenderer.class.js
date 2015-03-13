@@ -102,6 +102,20 @@ CanvasRenderer.prototype = {
 			context.fillStyle = color;
 			context.fillRect(enemy.x * zoom, enemy.y * zoom, zoom, zoom);
 		}
+		for (var i = 0; i < level.items.length; i++){
+			var item = level.items[i];
+			var color = '#FFFFFF';
+			switch (item.code){
+			case 'dagger':
+				color = '#EEEEEE';
+				break;
+			case 'leatherArmor':
+				color = '#00FF88';
+				break;
+			}
+			context.fillStyle = color;
+			context.fillRect(item.x * zoom, item.y * zoom, zoom, zoom);
+		}
 	},
 	drawLevelWithIcons: function(cells, canvas){
 		var canvas = document.getElementById(canvas);

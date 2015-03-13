@@ -13,13 +13,13 @@ MonsterPopulator.prototype = {
 	},
 	populateArea: function(area, level){
 		for (var i = 0; i < area.enemyCount; i++){
-			var position = this.getFreePlace(area, level);
+			var position = level.getFreePlace(area);
 			if (position){
 				this.addMonster(area,  position.x, position.y, level);
 			}
 		}
 		if (area.boss){
-			var position = this.getFreePlace(area, level);
+			var position = level.getFreePlace(area);
 			if (position){
 				level.addEnemy(area.boss, position.x, position.y);
 			}
@@ -28,17 +28,6 @@ MonsterPopulator.prototype = {
 	addMonster: function(area, x, y, level){
 		var monster = Util.randomElementOf(area.enemies);
 		level.addEnemy(monster, x, y);
-	},
-	getFreePlace: function(area, level){
-		while(true){
-			var randPoint = {
-				x: Util.rand(area.x, area.x+area.w-1),
-				y: Util.rand(area.y, area.y+area.h-1)
-			}
-			var cell = level.cells[randPoint.x][randPoint.y]; 
-			if (cell == area.floor || area.corridor && cell == area.corridor || cell == 'fakeWater')
-				return randPoint;
-		}
 	}
 }
 

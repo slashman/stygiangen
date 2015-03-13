@@ -54,6 +54,7 @@ FirstLevelGenerator.prototype = {
 			area.enemies = ['bat', 'lavaLizard'];
 			area.enemyCount = 5;
 			area.boss = 'daemon';
+			area.items = ['dagger', 'dagger', 'leatherArmor']
 		}
 		return areas;
 	},
