@@ -60,9 +60,10 @@ FirstLevelGenerator.prototype = {
 				area.corridor = 'stoneFloor';
 			}
 			area.enemies = ['bat', 'lavaLizard'];
-			area.enemyCount = 5;
-			area.boss = 'daemon';
-			area.items = ['dagger', 'dagger', 'leatherArmor']
+			area.enemyCount = Util.rand(3,5);
+			if (Util.chance(20))
+				area.boss = 'daemon';
+			area.items = ['dagger']
 		}
 		return areas;
 	},

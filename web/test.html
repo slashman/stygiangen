@@ -37,7 +37,7 @@ function generate(many, tiles){
 		canvasRenderer.drawSketch(generatedLevel.sketch, 'levelCanvas', true);
 		if (tiles){
 			document.getElementById('levelCanvasImage').style.display = 'inline';
-			canvasRenderer.drawLevelWithIcons(generatedLevel.level.cells, 'levelCanvasImage');
+			canvasRenderer.drawLevelWithIcons(generatedLevel.level, 'levelCanvasImage');
 		}
 		console.log("Generated "+(i+1));
 	}

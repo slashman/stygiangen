@@ -119,7 +119,7 @@ CanvasRenderer.prototype = {
 			context.fillRect(item.x * zoom, item.y * zoom, zoom, zoom);
 		}
 	},
-	drawLevelWithIcons: function(cells, canvas){
+	drawLevelWithIcons: function(level, canvas){
 		var canvas = document.getElementById(canvas);
 		var context = canvas.getContext('2d');
 		context.font="12px Georgia";
@@ -145,6 +145,14 @@ CanvasRenderer.prototype = {
 		bridge.src = 'img/bridge.png';
 		var lava = new Image();
 		lava.src = 'img/lava.png';
+		var bat = new Image();
+		bat.src = 'img/bat.png';
+		var lavaLizard = new Image();
+		lavaLizard.src = 'img/lavaLizard.png';
+		var daemon = new Image();
+		daemon.src = 'img/daemon.png';
+		var treasure = new Image();
+		treasure.src = 'img/treasure.png';
 		var tiles = {
 			water: water,
 			fakeWater: fakeWater,
@@ -155,14 +163,26 @@ CanvasRenderer.prototype = {
 			stoneWall: stoneWall,
 			stoneFloor: stoneFloor,
 			bridge: bridge,
-			lava: lava
+			lava: lava,
+			bat: bat,
+			lavaLizard: lavaLizard,
+			daemon: daemon,
+			treasure: treasure
 		}
-	      
+	    var cells = level.cells;
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
 			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
 				var cell = cells[x][y]; 
 				context.drawImage(tiles[cell], x * 16, y * 16);
 			}
+		}
+		for (var i = 0; i < level.enemies.length; i++){
+			var enemy = level.enemies[i];
+			context.drawImage(tiles[enemy.code], enemy.x * 16, enemy.y * 16);
+		}
+		for (var i = 0; i < level.items.length; i++){
+			var item = level.items[i];
+			context.drawImage(tiles['treasure'], item.x * 16, item.y * 16);
 		}
 	}
 }
