@@ -6,14 +6,70 @@ var Util = require('./Utils');
 var Splitter = require('./Splitter');
 
 FirstLevelGenerator.prototype = {
+	LAVA_CHANCE:     [100,  0, 20,  0,100, 10, 50,100],
+	WATER_CHANCE:    [  0,100, 10,100,  0, 50,  0,  0],
+	CAVERN_CHANCE:   [ 80, 80, 20, 20, 60, 90, 10, 50],
+	LAGOON_CHANCE:   [  0, 50, 10, 20,  0, 30,  0,  0],
+	WALLLESS_CHANCE: [ 50, 10, 80, 90, 10, 90, 10, 50],
+	GANGS: [
+		[ // Level 1
+			{boss: 'daemon', minions: ['firelizard'], quantity: 5},
+			{minions: ['firelizard'], quantity: 10},
+			{boss: 'hydra', minions: ['firelizard'], quantity: 5}
+		],
+		[ // Level 2
+			{boss: 'daemon', minions: ['seaSerpent', 'octopus', 'nixie'], quantity: 5},
+			{boss: 'hydra', minions: ['seaSerpent', 'octopus', 'nixie'], quantity: 5},
+			{boss: 'balron', minions: ['seaSerpent', 'octopus', 'nixie'], quantity: 5},
+			{minions: ['seaSerpent'], quantity: 10},
+			{minions: ['nixie'], quantity: 10}
+		],
+		[ // Level 3
+			{minions: ['daemon'], quantity: 10},
+			{boss: 'balron', minions: ['daemon'], quantity: 3},
+		],
+		[ // Level 4
+			{boss: 'gazer', minions: ['headless'], quantity: 5},
+			{boss: 'liche', minions: ['ghost'], quantity: 5},
+			{boss: 'daemon', minions: ['gazer', 'gremlin'], quantity: 5},
+		],
+		[ // Level 5
+			{minions: ['dragon', 'zorn', 'balron'], quantity: 6},
+			{minions: ['reaper', 'gazer', 'phantom'], quantity: 6},
+			{boss: 'balron', minions: ['headless'], quantity: 10},
+			{boss: 'zorn', minions: ['headless'], quantity: 10},
+			{minions: ['dragon', 'lavaLizard'], quantity: 10},
+		],
+		[ // Level 6
+			{minions: ['reaper'], quantity: 6},
+			{boss: 'balron', minions: ['daemon'], quantity: 6},
+			{areaType: 'cave', minions: ['bat'], quantity: 15},
+			{areaType: 'cave', boss: 'twister', minions: ['seaSerpent'], quantity: 5},
+			{boss: 'balron', minions: ['hydra'], quantity: 10},
+			{boss: 'balron', minions: ['mage'], quantity: 10}
+		],
+		[ // Level 7
+			{minions: ['headless'], quantity: 20},
+			{minions: ['hydra'], quantity: 6},
+			{minions: ['skeleton', 'wisp', 'ghost'], quantity: 15},
+			{boss: 'balron', minions: ['skeleton'], quantity: 20}
+		],
+		[ // Level 8
+			{minions: ['dragon', 'daemon', 'balron'], quantity: 10},
+			{minions: ['warrior', 'mage', 'bard', 'druid', 'tinker', 'paladin', 'shepherd', 'ranger'], quantity: 15},
+			{minions: ['gazer', 'balron'], quantity: 10},
+			{boss: 'liche', minions: ['skeleton'], quantity: 20},
+			{minions: ['ghost', 'wisp'], quantity: 20},
+			{minions: ['lavaLizards'], quantity: 20}
+		]		
+	],
+
+	
 	generateLevel: function(depth){
-		var hasRiver = depth < 6 && Util.chance(100 - depth * 15);
-		var hasLava = depth > 5 && Util.chance(depth * 10 + 20);
-		hasLava = Util.chance(50);
-		hasRiver = Util.chance(50);
-		
+		var hasRiver = Util.chance(this.WATER_CHANCE[depth-1]);
+		var hasLava = Util.chance(this.LAVA_CHANCE[depth-1]);
 		var mainEntrance = depth == 1;
-		var areas = this.generateAreas(hasLava);
+		var areas = this.generateAreas(depth, hasLava);
 		this.placeExits(areas);
 		var level = {
 			hasRivers: hasRiver,
@@ -21,10 +77,10 @@ FirstLevelGenerator.prototype = {
 			mainEntrance: mainEntrance,
 			strata: 'solidRock',
 			areas: areas
-		}
+		} 
 		return level;
 	},
-	generateAreas: function(hasLava){
+	generateAreas: function(depth, hasLava){
 		var bigArea = {
 			x: 0,
 			y: 0,
@@ -42,33 +98,43 @@ FirstLevelGenerator.prototype = {
 		Splitter.connectAreas(areas,3);
 		for (var i = 0; i < areas.length; i++){
 			var area = areas[i];
-			if (Util.chance(70)){ //TODO: Define areas based on depth
-				area.areaType = 'cavern';
-				area.areaId = 'c1';
-				if (hasLava){
-					area.floor = 'cavernFloor';
-					area.cavernType = Util.randomElementOf(['rocky','bridges']);
-				} else {
-					area.floor = Util.chance(50)?'fakeWater':'cavernFloor';
-					area.cavernType = Util.randomElementOf(['rocky','bridges','watery']);
-				}
-			} else {
-				area.areaType = 'rooms';
-				area.areaId = 'c1';
-				area.floor = 'stoneFloor';
-				area.wall = Util.chance(50) ? 'stoneWall' : false;
-				area.corridor = 'stoneFloor';
-			}
-			area.enemies = ['bat', 'rat', 'spider'];
-			area.enemyCount = Util.rand(3,5);
-			if (Util.chance(20))
-				area.boss = 'troll';
-			area.items = [];
-			var itemCount = Util.rand(3,5);
-			for (var j = 0; j < itemCount; j++)
-				area.items.push(Util.randomElementOf(['hpPotion', 'protection', 'dagger', 'shortSword']))
+			this.setAreaDetails(area, depth, hasLava);
 		}
 		return areas;
+	},
+	setAreaDetails: function(area, depth, hasLava){
+		if (Util.chance(this.CAVERN_CHANCE[depth-1])){
+			area.areaType = 'cavern';
+			if (hasLava){
+				area.floor = 'cavernFloor';
+				area.cavernType = Util.randomElementOf(['rocky','bridges']);
+			} else {
+				if (Util.chance(this.LAGOON_CHANCE[depth-1])){
+					area.floor = 'fakeWater';
+				} else {
+					area.floor = 'cavernFloor';
+				}
+				area.cavernType = Util.randomElementOf(['rocky','bridges','watery']);
+			}
+		} else {
+			area.areaType = 'rooms';
+			area.floor = 'stoneFloor';
+			area.wall = Util.chance(this.WALLLESS_CHANCE[depth-1]) ? false : 'stoneWall';
+			area.corridor = 'stoneFloor';
+		}
+		area.enemies = [];
+		area.items = [];
+		
+		var randomGang = Util.randomElementOf(this.GANGS[depth-1]);
+		area.enemies = randomGang.minions;
+		area.enemyCount = randomGang.quantity + Util.rand(0,3);
+		if (randomGang)
+			area.boss = randomGang.boss;
+		/*
+		var itemCount = Util.rand(3,5);
+		for (var j = 0; j < itemCount; j++)
+			area.items.push(Util.randomElementOf(['hpPotion', 'protection', 'dagger', 'shortSword']))
+		*/
 	},
 	placeExits: function(areas){
 		var dist = null;

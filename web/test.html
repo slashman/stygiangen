@@ -32,7 +32,8 @@ function generate(many, tiles){
 	if (!many)
 		many = 1;
 	for (var i = 0; i < many; i++){
-		generatedLevel = generator.generateLevel(1);
+		var depth = parseInt(document.getElementById('txtDepth').value);
+		generatedLevel = generator.generateLevel(depth);
 		canvasRenderer.drawLevel(generatedLevel.level, 'levelCanvas');
 		canvasRenderer.drawSketch(generatedLevel.sketch, 'levelCanvas', true);
 		if (tiles){
@@ -49,6 +50,8 @@ function exportToKramgine(){
 </script>
 <canvas id="levelCanvas" width="512" height="512"></canvas>
 <canvas id="levelCanvasImage" width="1024" height="1024" style = "display: none;"></canvas>
+<br>
+Depth: <input type = "text" id = "txtDepth"/>
 <input type = "button" value = "Generate" onclick="generate();"/>
 <input type = "button" value = "Generate with tiles" onclick="generate(1, true);"/>
 <input type = "button" value = "Generate 50" onclick="generate(50);"/>
