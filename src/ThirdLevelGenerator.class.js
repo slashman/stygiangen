@@ -88,7 +88,7 @@ ThirdLevelGenerator.prototype = {
 		for (var i = 0; i < sketch.areas.length; i++){
 			var area = sketch.areas[i];
 			var type = area.areaType;
-			if (type === 'cavern'){
+			if (type === 'cavern'){ 
 				this.fillWithCavern(level, area);
 			} else if (type === 'rooms'){
 				this.fillWithRooms(level, area);
@@ -103,12 +103,22 @@ ThirdLevelGenerator.prototype = {
 			var tile = null;
 			if (area.hasExit){
 				tile = 'downstairs';
-			}
-			if (area.hasEntrance){
+			} else {
 				tile = 'upstairs';
 			}
 			var freeSpot = level.getFreePlace(area);
 			level.cells[freeSpot.x][freeSpot.y] = tile;
+			if (area.hasExit){
+				level.end = {
+					x: freeSpot.x,
+					y: freeSpot.y
+				};
+			} else {
+				level.start = {
+					x: freeSpot.x,
+					y: freeSpot.y
+				};
+			}
 		}
 	},
 	fillWithCavern: function(level, area){

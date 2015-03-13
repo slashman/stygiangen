@@ -5,7 +5,7 @@ function KramgineExporter(config){
 KramgineExporter.prototype = {
 	getLevel: function(level){
 		var tiles = this.getTiles();
-		var objects = [];
+		var objects = this.getObjects(level);
 		var map = this.getMap(level);
 		return {
 			tiles: tiles,
@@ -49,6 +49,17 @@ KramgineExporter.prototype = {
 	        this.BASIC_FLOOR_TILE,
 	        this.BASIC_FLOOR_TILE
 		];
+	},
+	getObjects: function(level){
+		var objects = [];
+		objects.push({
+			x: level.start.x,
+			z: level.start.y,
+			y: 0,
+			dir: 3,
+			type: 'player'
+		});
+		return objects;
 	},
 	getMap: function(level){
 		var map = [];
