@@ -35,7 +35,7 @@ function generate(many){
 		generatedLevel = generator.generateLevel(1);
 		//canvasRenderer.drawSketch(generatedLevel.sketch, 'sketchCanvas');
 		//canvasRenderer.drawLevel(generatedLevel.level.geo, 'geoCanvas');
-		canvasRenderer.drawLevel(generatedLevel.level.cells, 'levelCanvas');
+		canvasRenderer.drawLevel(generatedLevel.level, 'levelCanvas');
 		canvasRenderer.drawSketch(generatedLevel.sketch, 'levelCanvas', true);
 		//canvasRenderer.drawLevelWithIcons(generatedLevel.level.cells, 'levelCanvasImage');
 		console.log("Generated "+(i+1));

@@ -51,6 +51,9 @@ FirstLevelGenerator.prototype = {
 				area.wall = Util.chance(50) ? 'stoneWall' : false;
 				area.corridor = 'stoneFloor';
 			}
+			area.enemies = ['bat', 'lavaLizard'];
+			area.enemyCount = 5;
+			area.boss = 'daemon';
 		}
 		return areas;
 	},

@@ -47,12 +47,13 @@ CanvasRenderer.prototype = {
 			}
 		}
 	},
-	drawLevel: function(cells, canvas){
+	drawLevel: function(level, canvas){
 		var canvas = document.getElementById(canvas);
 		var context = canvas.getContext('2d');
 		context.font="12px Georgia";
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		var zoom = 8;
+		var cells = level.cells;
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
 			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
 				var color = '#FFFFFF';
@@ -83,6 +84,23 @@ CanvasRenderer.prototype = {
 				context.fillStyle = color;
 				context.fillRect(x * zoom, y * zoom, zoom, zoom);
 			}
+		}
+		for (var i = 0; i < level.enemies.length; i++){
+			var enemy = level.enemies[i];
+			var color = '#FFFFFF';
+			switch (enemy.code){
+			case 'bat':
+				color = '#EEEEEE';
+				break;
+			case 'lavaLizard':
+				color = '#00FF88';
+				break;
+			case 'daemon':
+				color = '#FF8800';
+				break;
+			}
+			context.fillStyle = color;
+			context.fillRect(enemy.x * zoom, enemy.y * zoom, zoom, zoom);
 		}
 	},
 	drawLevelWithIcons: function(cells, canvas){
