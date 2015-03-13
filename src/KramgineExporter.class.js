@@ -4,8 +4,53 @@ function KramgineExporter(config){
 
 KramgineExporter.prototype = {
 	getLevel: function(level){
-		var tiles = [];
+		var tiles = this.getTiles();
 		var objects = [];
+		var map = this.getMap(level);
+		return {
+			tiles: tiles,
+			objects: objects,
+			map: map
+		};
+	},
+	BASIC_WALL_TILE: {
+        "w":2,
+        "y":0,
+        "h":2,
+        "c":0,
+        "f":0,
+        "ch":2,
+        "sl":0,
+        "dir":0,
+        "fy":0
+    },
+    BASIC_FLOOR_TILE: {
+    	"w":0,
+        "y":0,
+        "h":2,
+        "c":2,
+        "f":2,
+        "ch":2,
+        "sl":0,
+        "dir":0,
+        "fy":0
+    },
+	getTiles: function(){
+		return [
+	        null, 
+	        this.BASIC_WALL_TILE,
+	        this.BASIC_FLOOR_TILE,
+	        this.BASIC_FLOOR_TILE,
+	        this.BASIC_FLOOR_TILE,
+	        this.BASIC_WALL_TILE,
+	        this.BASIC_FLOOR_TILE,
+	        this.BASIC_FLOOR_TILE,
+	        this.BASIC_FLOOR_TILE,
+	        this.BASIC_FLOOR_TILE,
+	        this.BASIC_FLOOR_TILE
+		];
+	},
+	getMap: function(level){
 		var map = [];
 		var cells = level.cells;
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
@@ -14,9 +59,9 @@ KramgineExporter.prototype = {
 				var cell = cells[x][y];
 				var id = null;
 				if (cell === 'water'){
-					id = 0;
+					id = 10;
 				} else if (cell === 'fakeWater'){
-					id = 0;
+					id = 10;
 				}else if (cell === 'solidRock'){
 					id = 1;
 				}else if (cell === 'cavernFloor'){
@@ -39,11 +84,7 @@ KramgineExporter.prototype = {
 				map[x][y] = id;
 			}
 		}
-		return {
-			tiles: tiles,
-			objects: objects,
-			map: map
-		};
+		return map;
 	}
 }
 
