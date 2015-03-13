@@ -81,6 +81,30 @@ KramgineExporter.prototype = {
 			dir: 3,
 			type: 'player'
 		});
+		for (var i = 0; i < level.enemies.length; i++){
+			var enemy = level.enemies[i];
+			var enemyData =
+			{
+	            x: enemy.x,
+	            z: enemy.y,
+	            y: 0,
+	            type: 'enemy',
+	            enemy: enemy.code
+	        };
+			objects.push(enemyData);
+		}
+		for (var i = 0; i < level.items.length; i++){
+			var item = level.items[i];
+			var itemData =
+			{
+	            x: item.x,
+	            z: item.y,
+	            y: 0,
+	            type: 'item',
+	            item: item.code
+	        };
+			objects.push(itemData);
+		}
 		return objects;
 	},
 	getMap: function(level){

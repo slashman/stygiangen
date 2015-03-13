@@ -59,11 +59,14 @@ FirstLevelGenerator.prototype = {
 				area.wall = Util.chance(50) ? 'stoneWall' : false;
 				area.corridor = 'stoneFloor';
 			}
-			area.enemies = ['bat', 'lavaLizard'];
+			area.enemies = ['bat', 'rat', 'spider'];
 			area.enemyCount = Util.rand(3,5);
 			if (Util.chance(20))
-				area.boss = 'daemon';
-			area.items = ['dagger']
+				area.boss = 'troll';
+			area.items = [];
+			var itemCount = Util.rand(3,5);
+			for (var j = 0; j < itemCount; j++)
+				area.items.push(Util.randomElementOf(['hpPotion', 'protection', 'dagger', 'shortSword']))
 		}
 		return areas;
 	},
