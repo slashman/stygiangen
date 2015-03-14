@@ -35,6 +35,17 @@ KramgineExporter.prototype = {
         "dir":0,
         "fy":0
     },
+    BRIDGE_TILE: {
+    	"w":0,
+        "y":0,
+        "h":2,
+        "c":2,
+        "f":4,
+        "ch":2,
+        "sl":0,
+        "dir":0,
+        "fy":0
+    },
     WATER_TILE: {
     	"w":0,
     	"y":0,
@@ -51,7 +62,7 @@ KramgineExporter.prototype = {
     	"y":0,
     	"h":2,
     	"c":2,
-    	"f":101,
+    	"f":103,
     	"ch":2,
     	"sl":0,
     	"dir":0,
@@ -60,16 +71,16 @@ KramgineExporter.prototype = {
 	getTiles: function(){
 		return [
 	        null, 
-	        this.BASIC_WALL_TILE,
-	        this.BASIC_FLOOR_TILE,
-	        this.BASIC_FLOOR_TILE,
-	        this.BASIC_FLOOR_TILE,
-	        this.BASIC_WALL_TILE,
-	        this.BASIC_FLOOR_TILE,
-	        this.BASIC_FLOOR_TILE,
-	        this.BASIC_FLOOR_TILE,
-	        this.LAVA_TILE,
-	        this.WATER_TILE
+	        this.BASIC_WALL_TILE, // solidRock
+	        this.BASIC_FLOOR_TILE, // cavernFloor
+	        this.BASIC_FLOOR_TILE, // downstairs
+	        this.BASIC_FLOOR_TILE, // upstairs
+	        this.BASIC_WALL_TILE, // stoneWall
+	        this.BASIC_FLOOR_TILE, // stoneFloor
+	        this.BASIC_FLOOR_TILE, // corridor
+	        this.BRIDGE_TILE, // bridge
+	        this.LAVA_TILE, // lava
+	        this.WATER_TILE // water
 		];
 	},
 	getObjects: function(level){
