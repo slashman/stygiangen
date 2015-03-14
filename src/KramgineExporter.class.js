@@ -110,9 +110,9 @@ KramgineExporter.prototype = {
 	getMap: function(level){
 		var map = [];
 		var cells = level.cells;
-		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
-			map[x] = [];
-			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
+		for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
+			map[y] = [];
+			for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
 				var cell = cells[x][y];
 				var id = null;
 				if (cell === 'water'){
@@ -138,7 +138,7 @@ KramgineExporter.prototype = {
 				}else if (cell === 'lava'){
 					id = 9;
 				}
-				map[x][y] = id;
+				map[y][x] = id;
 			}
 		}
 		return map;
