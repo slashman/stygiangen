@@ -75,8 +75,8 @@ KramgineExporter.prototype = {
 	getObjects: function(level){
 		var objects = [];
 		objects.push({
-			x: level.start.x,
-			z: level.start.y,
+			x: level.start.x + 0.5,
+			z: level.start.y + 0.5,
 			y: 0,
 			dir: 3,
 			type: 'player'
@@ -85,8 +85,8 @@ KramgineExporter.prototype = {
 			var enemy = level.enemies[i];
 			var enemyData =
 			{
-	            x: enemy.x,
-	            z: enemy.y,
+	            x: enemy.x + 0.5,
+	            z: enemy.y + 0.5,
 	            y: 0,
 	            type: 'enemy',
 	            enemy: enemy.code
@@ -97,8 +97,8 @@ KramgineExporter.prototype = {
 			var item = level.items[i];
 			var itemData =
 			{
-	            x: item.x,
-	            z: item.y,
+	            x: item.x + 0.5,
+	            z: item.y + 0.5,
 	            y: 0,
 	            type: 'item',
 	            item: item.code
