@@ -18,6 +18,7 @@ Generator.prototype = {
 		var sketch = this.firstLevelGenerator.generateLevel(depth);
 		var level = this.secondLevelGenerator.fillLevel(sketch);
 		this.thirdLevelGenerator.fillLevel(sketch, level);
+		this.secondLevelGenerator.frameLevel(sketch, level);
 		this.monsterPopulator.populateLevel(sketch, level);
 		this.itemPopulator.populateLevel(sketch, level);
 		return {

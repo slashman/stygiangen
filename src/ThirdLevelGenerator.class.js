@@ -107,6 +107,10 @@ ThirdLevelGenerator.prototype = {
 				tile = 'upstairs';
 			}
 			var freeSpot = level.getFreePlace(area);
+			if (freeSpot.x == 0 || freeSpot.y == 0 || freeSpot.x == level.cells.length - 1 || freeSpot.y == level.cells[0].length - 1){
+				i--;
+				continue;
+			}
 			level.cells[freeSpot.x][freeSpot.y] = tile;
 			if (area.hasExit){
 				level.end = {

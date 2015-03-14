@@ -89,6 +89,16 @@ SecondLevelGenerator.prototype = {
 				}
 			}
 		}
+	},
+	frameLevel: function(sketch, level){
+		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
+			if (level.cells[x][0] != 'stoneWall') level.cells[x][0] = sketch.strata;
+			if (level.cells[x][this.config.LEVEL_HEIGHT-1] != 'stoneWall') level.cells[x][this.config.LEVEL_HEIGHT-1] = sketch.strata;
+		}
+		for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
+			if (level.cells[0][y] != 'stoneWall') level.cells[0][y] = sketch.strata;
+			if (level.cells[this.config.LEVEL_WIDTH-1][y] != 'stoneWall') level.cells[this.config.LEVEL_WIDTH-1][y] = sketch.strata;
+		}
 	}
 }
 
