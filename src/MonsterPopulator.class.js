@@ -8,6 +8,8 @@ MonsterPopulator.prototype = {
 	populateLevel: function(sketch, level){
 		for (var i = 0; i < sketch.areas.length; i++){
 			var area = sketch.areas[i];
+			if (area.hasEntrance)
+				continue;
 			this.populateArea(area, level);
 		}
 	},
