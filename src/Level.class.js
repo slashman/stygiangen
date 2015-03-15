@@ -8,17 +8,23 @@ Level.prototype = {
 	init: function(){
 		this.cells = [];
 		this.enemies = [];
+		this.enemiesMap = {};
 		this.items = [];
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
 			this.cells[x] = [];
 		}
 	},
 	addEnemy: function(enemy, x, y){
-		this.enemies.push({
+		var enemy = {
 			code: enemy,
 			x: x,
 			y: y
-		});
+		};
+		this.enemies.push(enemy);
+		this.enemiesMap[x+"_"+y] = enemy;
+	},
+	getEnemy: function(x,y){
+		return this.enemiesMap[x+"_"+y];
 	},
 	addItem: function(item, x, y){
 		this.items.push({
