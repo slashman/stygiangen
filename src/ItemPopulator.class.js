@@ -59,14 +59,14 @@ ItemPopulator.prototype = {
 		{code: 'light', rarity: 1000, depth: 2},
 		{code: 'missile', rarity: 1000, depth: 3},
 		{code: 'iceball', rarity: 500, depth: 4},
-		{code: 'repel', rarity: 500, depth: 5},
+		//{code: 'repel', rarity: 500, depth: 5},
 		{code: 'blink', rarity: 333, depth: 5},
 		{code: 'fireball', rarity: 333, depth: 6},
 		{code: 'protection', rarity: 250, depth: 6},
 		{code: 'time', rarity: 200, depth: 7},
 		{code: 'sleep', rarity: 200, depth: 7},
-		{code: 'jinx', rarity: 166, depth: 8},
-		{code: 'tremor', rarity: 166, depth: 8},
+		//{code: 'jinx', rarity: 166, depth: 8},
+		//{code: 'tremor', rarity: 166, depth: 8},
 		{code: 'kill', rarity: 142, depth: 8}
 	],
 	getAnItem: function(){
