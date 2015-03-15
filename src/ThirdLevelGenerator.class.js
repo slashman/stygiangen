@@ -177,7 +177,7 @@ ThirdLevelGenerator.prototype = {
 			for (var j = 0; j < line.length; j++){
 				var point = line[j];
 				var currentCell = level.cells[point.x][point.y];
-				if (currentCell != 'water' && currentCell != 'lava')  
+				if (currentCell != 'water')  
 					level.cells[point.x][point.y] = area.floor;
 			}
 		}
