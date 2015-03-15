@@ -19,15 +19,15 @@ FirstLevelGenerator.prototype = {
 			{boss: 'hydra', minions: ['firelizard'], quantity: 5}
 		],
 		[ // Level 2
-			{boss: 'daemon', minions: ['seaSerpent', 'octopus', 'nixie'], quantity: 5},
-			{boss: 'hydra', minions: ['seaSerpent', 'octopus', 'nixie'], quantity: 5},
-			{boss: 'balron', minions: ['seaSerpent', 'octopus', 'nixie'], quantity: 5},
+			{boss: 'daemon', minions: ['seaSerpent', 'octopus'], quantity: 5},
+			{boss: 'hydra', minions: ['seaSerpent', 'octopus'], quantity: 5},
+			{boss: 'balron', minions: ['seaSerpent', 'octopus'], quantity: 5},
 			{minions: ['seaSerpent'], quantity: 10},
-			{minions: ['nixie'], quantity: 10}
+			{minions: ['octopus'], quantity: 10}
 		],
 		[ // Level 3
 			{minions: ['daemon'], quantity: 10},
-			{boss: 'balron', minions: ['daemon'], quantity: 3},
+			{boss: 'balron', minions: ['daemon'], quantity: 3}
 		],
 		[ // Level 4
 			{boss: 'gazer', minions: ['headless'], quantity: 5},
@@ -36,7 +36,7 @@ FirstLevelGenerator.prototype = {
 		],
 		[ // Level 5
 			{minions: ['dragon', 'zorn', 'balron'], quantity: 6},
-			{minions: ['reaper', 'gazer', 'phantom'], quantity: 6},
+			{minions: ['reaper', 'gazer'], quantity: 6},
 			{boss: 'balron', minions: ['headless'], quantity: 10},
 			{boss: 'zorn', minions: ['headless'], quantity: 10},
 			{minions: ['dragon', 'lavaLizard'], quantity: 10},
@@ -45,7 +45,7 @@ FirstLevelGenerator.prototype = {
 			{minions: ['reaper'], quantity: 6},
 			{boss: 'balron', minions: ['daemon'], quantity: 6},
 			{areaType: 'cave', minions: ['bat'], quantity: 15},
-			{areaType: 'cave', boss: 'twister', minions: ['seaSerpent'], quantity: 5},
+			{areaType: 'cave', minions: ['seaSerpent'], quantity: 5},
 			{boss: 'balron', minions: ['hydra'], quantity: 10},
 			{boss: 'balron', minions: ['evilMage'], quantity: 4}
 		],
