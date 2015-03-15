@@ -14,54 +14,54 @@ FirstLevelGenerator.prototype = {
 	HEIGHT:          [  1,  2,  1,  1,  1,  2,  2,  3],
 	GANGS: [
 		[ // Level 1
-			{boss: 'daemon', minions: ['mongbat'], quantity: 5},
-			{minions: ['mongbat'], quantity: 10},
-			{boss: 'hydra', minions: ['mongbat'], quantity: 5}
+			{boss: 'daemon', minions: ['mongbat'], quantity: 2},
+			{minions: ['mongbat'], quantity: 3},
+			{boss: 'hydra', minions: ['mongbat'], quantity: 2}
 		],
 		[ // Level 2
-			{boss: 'daemon', minions: ['seaSerpent', 'octopus'], quantity: 5},
-			{boss: 'hydra', minions: ['seaSerpent', 'octopus'], quantity: 5},
-			{boss: 'balron', minions: ['seaSerpent', 'octopus'], quantity: 5},
-			{minions: ['seaSerpent'], quantity: 10},
-			{minions: ['octopus'], quantity: 10}
+			{boss: 'daemon', minions: ['seaSerpent', 'octopus'], quantity: 3},
+			{boss: 'hydra', minions: ['seaSerpent', 'octopus'], quantity: 3},
+			{boss: 'balron', minions: ['seaSerpent', 'octopus'], quantity: 3},
+			{minions: ['seaSerpent'], quantity: 3},
+			{minions: ['octopus'], quantity: 3}
 		],
 		[ // Level 3
-			{minions: ['daemon'], quantity: 10},
-			{boss: 'balron', minions: ['daemon'], quantity: 3}
+			{minions: ['daemon'], quantity: 4},
+			{boss: 'balron', minions: ['daemon'], quantity: 2}
 		],
 		[ // Level 4
-			{boss: 'gazer', minions: ['headless'], quantity: 5},
-			{boss: 'liche', minions: ['ghost'], quantity: 5},
-			{boss: 'daemon', minions: ['gazer', 'gremlin'], quantity: 5},
+			{boss: 'gazer', minions: ['headless'], quantity: 3},
+			{boss: 'liche', minions: ['ghost'], quantity: 3},
+			{boss: 'daemon', minions: ['gazer', 'gremlin'], quantity: 3},
 		],
 		[ // Level 5
-			{minions: ['dragon', 'zorn', 'balron'], quantity: 6},
-			{minions: ['reaper', 'gazer'], quantity: 6},
-			{boss: 'balron', minions: ['headless'], quantity: 10},
-			{boss: 'zorn', minions: ['headless'], quantity: 10},
-			{minions: ['dragon', 'lavaLizard'], quantity: 10},
+			{minions: ['dragon', 'zorn', 'balron'], quantity: 3},
+			{minions: ['reaper', 'gazer'], quantity: 3},
+			{boss: 'balron', minions: ['headless'], quantity: 3},
+			{boss: 'zorn', minions: ['headless'], quantity: 3},
+			{minions: ['dragon', 'lavaLizard'], quantity: 3},
 		],
 		[ // Level 6
-			{minions: ['reaper'], quantity: 6},
-			{boss: 'balron', minions: ['daemon'], quantity: 6},
-			{areaType: 'cave', minions: ['bat'], quantity: 15},
+			{minions: ['reaper'], quantity: 3},
+			{boss: 'balron', minions: ['daemon'], quantity: 3},
+			{areaType: 'cave', minions: ['bat'], quantity: 5},
 			{areaType: 'cave', minions: ['seaSerpent'], quantity: 5},
-			{boss: 'balron', minions: ['hydra'], quantity: 10},
-			{boss: 'balron', minions: ['evilMage'], quantity: 4}
+			{boss: 'balron', minions: ['hydra'], quantity: 3},
+			{boss: 'balron', minions: ['evilMage'], quantity: 3}
 		],
 		[ // Level 7
-			{minions: ['headless'], quantity: 20},
-			{minions: ['hydra'], quantity: 6},
-			{minions: ['skeleton', 'wisp', 'ghost'], quantity: 15},
-			{boss: 'balron', minions: ['skeleton'], quantity: 20}
+			{minions: ['headless'], quantity: 8},
+			{minions: ['hydra'], quantity: 3},
+			{minions: ['skeleton', 'wisp', 'ghost'], quantity: 6},
+			{boss: 'balron', minions: ['skeleton'], quantity: 10}
 		],
 		[ // Level 8
-			{minions: ['dragon', 'daemon', 'balron'], quantity: 10},
-			{minions: ['warrior', 'mage', 'bard', 'druid', 'tinker', 'paladin', 'shepherd', 'ranger'], quantity: 15},
-			{minions: ['gazer', 'balron'], quantity: 10},
-			{boss: 'liche', minions: ['skeleton'], quantity: 20},
-			{minions: ['ghost', 'wisp'], quantity: 20},
-			{minions: ['mongbat'], quantity: 20}
+			{minions: ['dragon', 'daemon', 'balron'], quantity: 3},
+			{minions: ['warrior', 'mage', 'bard', 'druid', 'tinker', 'paladin', 'shepherd', 'ranger'], quantity: 4},
+			{minions: ['gazer', 'balron'], quantity: 3},
+			{boss: 'liche', minions: ['skeleton'], quantity: 4},
+			{minions: ['ghost', 'wisp'], quantity: 4},
+			{minions: ['mongbat'], quantity: 5}
 		]		
 	],
 
