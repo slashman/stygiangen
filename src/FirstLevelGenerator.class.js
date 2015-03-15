@@ -11,6 +11,7 @@ FirstLevelGenerator.prototype = {
 	CAVERN_CHANCE:   [ 80, 80, 20, 20, 60, 90, 10, 50],
 	LAGOON_CHANCE:   [  0, 50, 10, 20,  0, 30,  0,  0],
 	WALLLESS_CHANCE: [ 50, 10, 80, 90, 10, 90, 10, 50],
+	HEIGHT:          [  1,  2,  1,  1,  1,  2,  2,  3],
 	GANGS: [
 		[ // Level 1
 			{boss: 'daemon', minions: ['firelizard'], quantity: 5},
@@ -77,8 +78,8 @@ FirstLevelGenerator.prototype = {
 			mainEntrance: mainEntrance,
 			strata: 'solidRock',
 			areas: areas,
-			depth: depth
-			
+			depth: depth,
+			ceilingHeight: this.HEIGHT[depth-1]
 		} 
 		return level;
 	},
@@ -126,7 +127,6 @@ FirstLevelGenerator.prototype = {
 		}
 		area.enemies = [];
 		area.items = [];
-		
 		var randomGang = Util.randomElementOf(this.GANGS[depth-1]);
 		area.enemies = randomGang.minions;
 		area.enemyCount = randomGang.quantity + Util.rand(0,3);

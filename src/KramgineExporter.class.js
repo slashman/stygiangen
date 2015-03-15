@@ -4,6 +4,7 @@ function KramgineExporter(config){
 
 KramgineExporter.prototype = {
 	getLevel: function(level){
+		this.initTileDefs(level.ceilingHeight);
 		var tiles = this.getTiles();
 		var objects = this.getObjects(level);
 		var map = this.getMap(level);
@@ -13,75 +14,40 @@ KramgineExporter.prototype = {
 			map: map
 		};
 	},
-	BASIC_WALL_TILE: {
-        "w":2,
-        "y":0,
-        "h":2,
-        "c":0,
-        "f":0,
-        "ch":2,
-        "sl":0,
-        "dir":0,
-        "fy":0
-    },
-    BASIC_FLOOR_TILE: {
-    	"w":0,
-        "y":0,
-        "h":2,
-        "c":2,
-        "f":2,
-        "ch":2,
-        "sl":0,
-        "dir":0,
-        "fy":0
-    },
-    BRIDGE_TILE: {
-    	"w":0,
-        "y":0,
-        "h":2,
-        "c":2,
-        "f":4,
-        "ch":2,
-        "sl":0,
-        "dir":0,
-        "fy":0
-    },
-    WATER_TILE: {
-    	"w":0,
-    	"y":0,
-    	"h":2,
-    	"c":2,
-    	"f":101,
-    	"ch":2,
-    	"sl":0,
-    	"dir":0,
-    	"fy":0
+	initTileDefs: function(ceilingHeight){
+		this.tiles = [];
+		this.tilesMap = [];
+		this.tiles.push(null);
+		this.ceilingHeight = ceilingHeight;
+		this.addTile('STONE_WALL', 2, 0, 0);
+		this.addTile('STONE_FLOOR', 0, 2, 2);
+		this.addTile('BRIDGE', 0, 4, 2);
+		this.addTile('WATER', 0, 101, 2);
+		this.addTile('LAVA', 0, 103, 2);
 	},
-	LAVA_TILE: {
-    	"w":0,
-    	"y":0,
-    	"h":2,
-    	"c":2,
-    	"f":103,
-    	"ch":2,
-    	"sl":0,
-    	"dir":0,
-    	"fy":0
+	addTile: function (id, wallTexture, floorTexture, ceilTexture){
+		var tile = this.createTile(wallTexture, floorTexture, ceilTexture, this.ceilingHeight);
+		this.tiles.push(tile);
+		this.tilesMap[id] = this.tiles.length - 1;
+	},
+	getTile: function(id){
+		return this.tilesMap[id];
+	},
+	createTile: function(wallTexture, floorTexture, ceilTexture, height){
+		return {
+			w: wallTexture,
+			y: 0,
+			h: height,
+			f: floorTexture,
+			fy: 0,
+			c: ceilTexture,
+			ch: height,
+			sl: 0,
+			dir: 0
+		};
 	},
 	getTiles: function(){
-		return [
-	        null, 
-	        this.BASIC_WALL_TILE, // solidRock
-	        this.BASIC_FLOOR_TILE, // cavernFloor
-	        this.BASIC_FLOOR_TILE, // downstairs
-	        this.BASIC_FLOOR_TILE, // upstairs
-	        this.BASIC_WALL_TILE, // stoneWall
-	        this.BASIC_FLOOR_TILE, // stoneFloor
-	        this.BASIC_FLOOR_TILE, // corridor
-	        this.BRIDGE_TILE, // bridge
-	        this.LAVA_TILE, // lava
-	        this.WATER_TILE // water
-		];
+		return this.tiles;
 	},
 	getObjects: function(level){
 		var objects = [];
@@ -127,27 +93,27 @@ KramgineExporter.prototype = {
 				var cell = cells[x][y];
 				var id = null;
 				if (cell === 'water'){
-					id = 10;
+					id = this.getTile("WATER");
 				} else if (cell === 'fakeWater'){
-					id = 10;
+					id = this.getTile("WATER");
 				}else if (cell === 'solidRock'){
-					id = 1;
+					id = this.getTile("STONE_WALL");
 				}else if (cell === 'cavernFloor'){
-					id = 2;
+					id = this.getTile("STONE_FLOOR");
 				}else if (cell === 'downstairs'){
-					id = 3;
+					id = this.getTile("STONE_FLOOR");
 				}else if (cell === 'upstairs'){
-					id = 4;
+					id = this.getTile("STONE_FLOOR");
 				}else if (cell === 'stoneWall'){
-					id = 5;
+					id = this.getTile("STONE_WALL");
 				}else if (cell === 'stoneFloor'){
-					id = 6;
+					id = this.getTile("STONE_FLOOR");
 				}else if (cell === 'corridor'){
-					id = 7;
+					id = this.getTile("STONE_FLOOR");
 				}else if (cell === 'bridge'){
-					id = 8;
+					id = this.getTile("BRIDGE");
 				}else if (cell === 'lava'){
-					id = 9;
+					id = this.getTile("LAVA");
 				}
 				map[y][x] = id;
 			}
