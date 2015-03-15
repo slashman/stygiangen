@@ -12,6 +12,7 @@ SecondLevelGenerator.prototype = {
 		level.init();
 		this.fillStrata(level, sketch);
 		level.ceilingHeight = sketch.ceilingHeight;
+		level.depth = sketch.depth;
 		level.vermin = sketch.vermin;
 		if (sketch.hasLava)
 			this.plotRivers(level, sketch, 'lava');
