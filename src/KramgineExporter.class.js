@@ -19,13 +19,15 @@ KramgineExporter.prototype = {
 		this.tilesMap = [];
 		this.tiles.push(null);
 		this.ceilingHeight = ceilingHeight;
-		this.addTile('STONE_WALL', 2, 0, 0, 0);
-		this.addTile('STONE_FLOOR', 0, 2, 2, 0);
-		this.addTile('BRIDGE', 0, 4, 2, 0);
-		this.addTile('WATER', 0, 101, 2, 0);
-		this.addTile('LAVA', 0, 103, 2, 0);
-		this.addTile('STAIRS_DOWN', 0, 50, 2, 0);
-		this.addTile('STAIRS_UP', 0, 2, 50, 0);
+		this.addTile('STONE_WALL', 5, 0, 0, 0);
+		this.addTile('STONE_FLOOR', 0, 6, 3, 0);
+		this.addTile('CAVERN_WALL', 4, 0, 0, 0);
+		this.addTile('CAVERN_FLOOR', 0, 5, 3, 0);
+		this.addTile('BRIDGE', 0, 4, 3, 0);
+		this.addTile('WATER', 0, 101, 3, 0);
+		this.addTile('LAVA', 0, 103, 3, 0);
+		this.addTile('STAIRS_DOWN', 0, 50, 3, 0);
+		this.addTile('STAIRS_UP', 0, 0, 50, 0);
 	},
 	addTile: function (id, wallTexture, floorTexture, ceilTexture, floorHeight){
 		var tile = this.createTile(wallTexture, floorTexture, ceilTexture, floorHeight, this.ceilingHeight);
@@ -99,9 +101,9 @@ KramgineExporter.prototype = {
 				} else if (cell === 'fakeWater'){
 					id = this.getTile("WATER");
 				}else if (cell === 'solidRock'){
-					id = this.getTile("STONE_WALL");
-				}else if (cell === 'cavernFloor'){
-					id = this.getTile("STONE_FLOOR"); 
+					id = this.getTile("CAVERN_WALL");
+				}else if (cell === 'cavernFloor'){ 
+					id = this.getTile("CAVERN_FLOOR"); 
 				}else if (cell === 'downstairs'){
 					id = this.getTile("STAIRS_DOWN");
 					objects.push({
