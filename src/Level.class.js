@@ -59,6 +59,15 @@ Level.prototype = {
 			} else if (cell == area.floor || area.corridor && cell == area.corridor || cell == 'fakeWater')
 				return randPoint;
 		}
+	},
+	getArea: function(x,y){
+		for (var i = 0; i < this.areasSketch.length; i++){
+			var area = this.areasSketch[i];
+			if (x >= area.x && x < area.x + area.w
+					&& y >= area.y && y < area.y + area.h)
+				return area;
+		}
+		return false;
 	}
 };
 

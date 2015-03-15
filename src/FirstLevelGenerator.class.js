@@ -64,8 +64,10 @@ FirstLevelGenerator.prototype = {
 			{minions: ['mongbat'], quantity: 5}
 		]		
 	],
-
-	
+	CAVERN_WALLS: 1,
+	CAVERN_FLOORS: 4,
+	STONE_WALLS: 6,
+	STONE_FLOORS: 3,
 	generateLevel: function(depth){
 		var hasRiver = Util.chance(this.WATER_CHANCE[depth-1]);
 		var hasLava = Util.chance(this.LAVA_CHANCE[depth-1]);
@@ -119,10 +121,17 @@ FirstLevelGenerator.prototype = {
 				}
 				area.cavernType = Util.randomElementOf(['rocky','bridges','watery']);
 			}
+			area.floorType = Util.rand(1, this.CAVERN_FLOORS);
 		} else {
 			area.areaType = 'rooms';
 			area.floor = 'stoneFloor';
-			area.wall = Util.chance(this.WALLLESS_CHANCE[depth-1]) ? false : 'stoneWall';
+			area.floorType = Util.rand(1, this.STONE_FLOORS);
+			if (Util.chance(this.WALLLESS_CHANCE[depth-1])){
+				area.wall = false;
+			} else {
+				area.wall = 'stoneWall';
+				area.wallType = Util.rand(1, this.STONE_WALLS);
+			}
 			area.corridor = 'stoneFloor';
 		}
 		area.enemies = [];

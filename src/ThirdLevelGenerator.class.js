@@ -13,6 +13,7 @@ ThirdLevelGenerator.prototype = {
 		this.placeExits(sketch, level);
 		this.raiseIslands(level);
 		this.enlargeBridges(level);
+		level.areasSketch = sketch.areas;
 		return level;
 	},
 	fattenCaverns: function(level){
