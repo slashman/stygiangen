@@ -12,6 +12,16 @@ FirstLevelGenerator.prototype = {
 	LAGOON_CHANCE:   [  0, 50, 10, 20,  0, 30,  0,  0],
 	WALLLESS_CHANCE: [ 50, 10, 80, 90, 10, 90, 10, 50],
 	HEIGHT:          [  1,  2,  1,  1,  1,  2,  2,  3],
+	VERMIN: [
+	         ['spider', 'rat'],
+	         ['bat', 'rat'],
+	         ['spider'],
+	         ['bat'],
+	         ['mongbat']
+	         ['headless'],
+	         ['headless', 'mongbat'],
+	         ['headless', 'skeleton']
+	        ],
 	GANGS: [
 		[ // Level 1
 			{boss: 'daemon', minions: ['mongbat'], quantity: 2},
@@ -81,7 +91,8 @@ FirstLevelGenerator.prototype = {
 			strata: 'solidRock',
 			areas: areas,
 			depth: depth,
-			ceilingHeight: this.HEIGHT[depth-1]
+			ceilingHeight: this.HEIGHT[depth-1],
+			vermin: this.VERMIN[depth-1]
 		} 
 		return level;
 	},

@@ -332,19 +332,15 @@ ThirdLevelGenerator.prototype = {
 				if (y < roomy + padding.top){
 					if (drawWall && y == roomy + padding.top - 1 && x + 1 >= roomx + padding.left && x <= roomx + roomw - padding.right)
 						level.cells[x][y] = area.wall;
-					//level.cells[x][y] = 'padding';
 				} else if (x < roomx + padding.left){
 					if (drawWall && x == roomx + padding.left - 1 && y >= roomy + padding.top && y <= roomy + roomh - padding.bottom)
 						level.cells[x][y] = area.wall;
-					//level.cells[x][y] = 'padding';
 				} else if (y > roomy + roomh - 1 - padding.bottom){
 					if (drawWall && y == roomy + roomh - padding.bottom && x + 1 >= roomx + padding.left && x <= roomx + roomw - padding.right)
 						level.cells[x][y] = area.wall;
-					//level.cells[x][y] = 'padding';
 				} else if (x > roomx + roomw - 1 - padding.right){
 					if (drawWall && x == roomx + roomw - padding.right && y >= roomy + padding.top && y <= roomy + roomh - padding.bottom)
 						level.cells[x][y] = area.wall;
-					//level.cells[x][y] = 'padding';
 				} else if (area.marked)
 					level.cells[x][y] = 'padding';
 				else

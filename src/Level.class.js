@@ -60,6 +60,33 @@ Level.prototype = {
 				return randPoint;
 		}
 	},
+	getFreePlaceOnLevel: function(onlyWater, noWater){
+		var tries = 0;
+		while(true){
+			var randPoint = {
+				x: Util.rand(0, this.cells.length - 1),
+				y: Util.rand(0, this.cells[0].length - 1)
+			}
+			var cell = this.cells[randPoint.x][randPoint.y]; 
+			if (onlyWater){
+				if (cell == 'water' || cell == 'fakeWater')
+					return randPoint;
+				else
+					tries++;
+				if (tries > 1000)
+					return false;
+			}  else if (noWater){
+				if (cell == 'water' || cell == 'fakeWater'){
+					tries++;
+					if (tries > 1000)
+						return false;
+				} else if (cell == 'stoneFloor' || cell == 'cavernFloor') {
+					return randPoint;
+				}
+			} else if (cell == 'stoneFloor' || cell == 'cavernFloor' || cell == 'fakeWater')
+				return randPoint;
+		}
+	},
 	getArea: function(x,y){
 		for (var i = 0; i < this.areasSketch.length; i++){
 			var area = this.areasSketch[i];

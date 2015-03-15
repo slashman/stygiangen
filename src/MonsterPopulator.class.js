@@ -12,6 +12,29 @@ MonsterPopulator.prototype = {
 				continue;
 			this.populateArea(area, level);
 		}
+		this.populateVermin(level);
+	},
+	populateVermin: function( level){
+		var tries = 0;
+		var vermin = 20;
+		for (var i = 0; i < vermin; i++){
+			var monster = Util.randomElementOf(level.vermin);
+			var onlyWater = this.isWaterMonster(monster);
+			var noWater = !onlyWater && !this.isFlyingMonster(monster);
+			var position = level.getFreePlaceOnLevel(onlyWater, noWater);
+			if (position){
+				if (level.getEnemy(position.x, position.y)){
+					tries++;
+					if (tries < 100){
+						i--;
+					} else {
+						tries = 0;
+					}
+					continue;
+				}
+				level.addEnemy(monster, position.x, position.y);
+			}
+		}
 	},
 	populateArea: function(area, level){
 		if (area.boss){
