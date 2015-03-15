@@ -9,14 +9,16 @@ module.exports = {
 		var retries = 0;
 		while (bigAreas.length > 0){
 			var bigArea = bigAreas.pop();
-			var horizontalSplit = Util.chance(50);
-			if (bigArea.w < MIN_WIDTH * 1.5 && bigArea.h < MIN_HEIGHT * 1.5){
+			if (bigArea.w < MIN_WIDTH + 1 && bigArea.h < MIN_HEIGHT + 1){
 				bigArea.bridges = [];
 				areas.push(bigArea);
 				continue;
-			} else if (bigArea.w < MIN_WIDTH * 1.5){
+			}
+			var horizontalSplit = Util.chance(50);
+			if (bigArea.w < MIN_WIDTH + 1){
 				horizontalSplit = true;
-			} else if (bigArea.h < MIN_HEIGHT * 1.5){
+			} 
+			if (bigArea.h < MIN_HEIGHT + 1){
 				horizontalSplit = false;
 			}
 			var area1 = null;
@@ -52,8 +54,14 @@ module.exports = {
 			}
 			if (area1.w < MIN_WIDTH || area1.h < MIN_HEIGHT ||
 				area2.w < MIN_WIDTH || area2.h < MIN_HEIGHT){
-				bigArea.bridges = [];
-				areas.push(bigArea);
+				if (retries > 100){
+					bigArea.bridges = [];
+					areas.push(bigArea);
+					retries = 0;
+				} else {
+					bigAreas.push(bigArea);
+					retries++;
+				}	
 				continue;
 			}
 			if (bigArea.depth == maxDepth && 
@@ -64,7 +72,8 @@ module.exports = {
 					bigAreas.push(bigArea);
 					retries++;
 					continue;
-				}		
+				}
+				retries = 0;
 			}
 			if (avoidPoints && (this.collidesWith(avoidPoints, area2) || this.collidesWith(avoidPoints, area1))){
 				if (retries > 100){
