@@ -14,9 +14,9 @@ FirstLevelGenerator.prototype = {
 	HEIGHT:          [  1,  2,  1,  1,  1,  2,  2,  3],
 	GANGS: [
 		[ // Level 1
-			{boss: 'daemon', minions: ['firelizard'], quantity: 5},
-			{minions: ['firelizard'], quantity: 10},
-			{boss: 'hydra', minions: ['firelizard'], quantity: 5}
+			{boss: 'daemon', minions: ['mongbat'], quantity: 5},
+			{minions: ['mongbat'], quantity: 10},
+			{boss: 'hydra', minions: ['mongbat'], quantity: 5}
 		],
 		[ // Level 2
 			{boss: 'daemon', minions: ['seaSerpent', 'octopus'], quantity: 5},
@@ -61,7 +61,7 @@ FirstLevelGenerator.prototype = {
 			{minions: ['gazer', 'balron'], quantity: 10},
 			{boss: 'liche', minions: ['skeleton'], quantity: 20},
 			{minions: ['ghost', 'wisp'], quantity: 20},
-			{minions: ['lavaLizards'], quantity: 20}
+			{minions: ['mongbat'], quantity: 20}
 		]		
 	],
 
