@@ -19,27 +19,27 @@ KramgineExporter.prototype = {
 		this.tilesMap = [];
 		this.tiles.push(null);
 		this.ceilingHeight = ceilingHeight;
-		this.addTile('STONE_WALL', 2, 0, 0);
-		this.addTile('STONE_FLOOR', 0, 2, 2);
-		this.addTile('BRIDGE', 0, 4, 2);
-		this.addTile('WATER', 0, 101, 2);
-		this.addTile('LAVA', 0, 103, 2);
+		this.addTile('STONE_WALL', 2, 0, 0, 0);
+		this.addTile('STONE_FLOOR', 0, 2, 2, 0);
+		this.addTile('BRIDGE', 0, 4, 2, 0);
+		this.addTile('WATER', 0, 101, 2, 0);
+		this.addTile('LAVA', 0, 103, 2, 0);
 	},
-	addTile: function (id, wallTexture, floorTexture, ceilTexture){
-		var tile = this.createTile(wallTexture, floorTexture, ceilTexture, this.ceilingHeight);
+	addTile: function (id, wallTexture, floorTexture, ceilTexture, floorHeight){
+		var tile = this.createTile(wallTexture, floorTexture, ceilTexture, floorHeight, this.ceilingHeight);
 		this.tiles.push(tile);
 		this.tilesMap[id] = this.tiles.length - 1;
 	},
 	getTile: function(id){
 		return this.tilesMap[id];
 	},
-	createTile: function(wallTexture, floorTexture, ceilTexture, height){
+	createTile: function(wallTexture, floorTexture, ceilTexture, floorHeight, height){
 		return {
 			w: wallTexture,
-			y: 0,
+			y: floorHeight,
 			h: height,
 			f: floorTexture,
-			fy: 0,
+			fy: floorHeight,
 			c: ceilTexture,
 			ch: height,
 			sl: 0,
