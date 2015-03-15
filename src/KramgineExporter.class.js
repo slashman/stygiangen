@@ -27,7 +27,7 @@ KramgineExporter.prototype = {
 		this.addTile('WATER', 0, 101, 3, 0);
 		this.addTile('LAVA', 0, 103, 3, 0);
 		this.addTile('STAIRS_DOWN', 0, 50, 3, 0);
-		this.addTile('STAIRS_UP', 0, 0, 50, 0);
+		this.addTile('STAIRS_UP', 0, 5, 50, 0);
 	},
 	addTile: function (id, wallTexture, floorTexture, ceilTexture, floorHeight){
 		var tile = this.createTile(wallTexture, floorTexture, ceilTexture, floorHeight, this.ceilingHeight);
@@ -115,13 +115,14 @@ KramgineExporter.prototype = {
 					});
 				}else if (cell === 'upstairs'){
 					id = this.getTile("STAIRS_UP");
-					objects.push({
-						x: x + 0.5,
-			            z: y + 0.5,
-			            y: 0,
-			            type: 'stairs',
-			            dir: 'up'
-					});
+					if (level.depth > 1)
+						objects.push({
+							x: x + 0.5,
+				            z: y + 0.5,
+				            y: 0,
+				            type: 'stairs',
+				            dir: 'up'
+						});
 				}else if (cell === 'stoneWall'){
 					id = this.getTile("STONE_WALL");
 				}else if (cell === 'stoneFloor'){
