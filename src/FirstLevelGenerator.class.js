@@ -39,7 +39,7 @@ FirstLevelGenerator.prototype = {
 			{minions: ['reaper', 'gazer'], quantity: 3},
 			{boss: 'balron', minions: ['headless'], quantity: 3},
 			{boss: 'zorn', minions: ['headless'], quantity: 3},
-			{minions: ['dragon', 'lavaLizard'], quantity: 3},
+			{minions: ['dragon', 'mongbat'], quantity: 3},
 		],
 		[ // Level 6
 			{minions: ['reaper'], quantity: 3},
