@@ -12,6 +12,7 @@ ThirdLevelGenerator.prototype = {
 		this.fattenCaverns(level);
 		this.placeExits(sketch, level);
 		this.raiseIslands(level);
+		this.enlargeBridges(level);
 		return level;
 	},
 	fattenCaverns: function(level){
@@ -63,6 +64,16 @@ ThirdLevelGenerator.prototype = {
 			return false;
 		}, 1, true);
 		
+	},
+	enlargeBridges: function(level){
+		level.cells = CA.runCA(level.cells, function(current, surrounding){
+			if (current != 'lava' && current != 'water' && current != 'fakeWater')
+				return false;
+			/*if (surrounding['cavernFloor'] > 0 || surrounding['stoneFloor'] > 0)
+				return false;*/
+			if (surrounding['bridge'] > 0)
+				return 'bridge';
+		}, 1, true);
 	},
 	raiseIslands: function(level){
 		level.cells = CA.runCA(level.cells, function(current, surrounding){
