@@ -13,9 +13,12 @@ MonsterPopulator.prototype = {
 	},
 	populateArea: function(area, level){
 		for (var i = 0; i < area.enemyCount; i++){
-			var position = level.getFreePlace(area);
+			var monster = Util.randomElementOf(area.enemies);
+			var onlyWater = this.isWaterMonster(monster);
+			var noWater = !onlyWater && !this.isFlyingMonster(monster);
+			var position = level.getFreePlace(area, onlyWater, noWater);
 			if (position){
-				this.addMonster(area,  position.x, position.y, level);
+				level.addEnemy(monster, position.x, position.y);
 			}
 		}
 		if (area.boss){
@@ -25,9 +28,11 @@ MonsterPopulator.prototype = {
 			}
 		}
 	},
-	addMonster: function(area, x, y, level){
-		var monster = Util.randomElementOf(area.enemies);
-		level.addEnemy(monster, x, y);
+	isWaterMonster: function(monster){
+		return monster == 'octopus' || monster == 'seaSerpent'; 
+	},
+	isFlyingMonster: function(monster){
+		return monster == 'bat' || monster == 'mongbat' || monster == 'ghost' || monster == 'dragon' || monster == 'gazer'; 
 	}
 }
 

@@ -27,14 +27,30 @@ Level.prototype = {
 			y: y
 		});
 	},
-	getFreePlace: function(area){
+	getFreePlace: function(area, onlyWater, noWater){
+		var tries = 0;
 		while(true){
 			var randPoint = {
 				x: Util.rand(area.x, area.x+area.w-1),
 				y: Util.rand(area.y, area.y+area.h-1)
 			}
 			var cell = this.cells[randPoint.x][randPoint.y]; 
-			if (cell == area.floor || area.corridor && cell == area.corridor || cell == 'fakeWater')
+			if (onlyWater){
+				if (cell == 'water' || cell == 'fakeWater')
+					return randPoint;
+				else
+					tries++;
+				if (tries > 1000)
+					return false;
+			}  else if (noWater){
+				if (cell == 'water' || cell == 'fakeWater'){
+					tries++;
+					if (tries > 1000)
+						return false;
+				} else if (cell == area.floor || area.corridor && cell == area.corridor) {
+					return randPoint;
+				}
+			} else if (cell == area.floor || area.corridor && cell == area.corridor || cell == 'fakeWater')
 				return randPoint;
 		}
 	}
