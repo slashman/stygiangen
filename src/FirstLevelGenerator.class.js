@@ -47,7 +47,7 @@ FirstLevelGenerator.prototype = {
 			{areaType: 'cave', minions: ['bat'], quantity: 15},
 			{areaType: 'cave', boss: 'twister', minions: ['seaSerpent'], quantity: 5},
 			{boss: 'balron', minions: ['hydra'], quantity: 10},
-			{boss: 'balron', minions: ['mage'], quantity: 10}
+			{boss: 'balron', minions: ['evilMage'], quantity: 4}
 		],
 		[ // Level 7
 			{minions: ['headless'], quantity: 20},
