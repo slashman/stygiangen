@@ -13,7 +13,7 @@ MonsterPopulator.prototype = {
 	},
 	populateArea: function(area, level){
 		if (area.boss){
-			var position = level.getFreePlace(area);
+			var position = level.getFreePlace(area, false, true);
 			if (position){
 				level.addEnemy(area.boss, position.x, position.y);
 			}
