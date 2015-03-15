@@ -15,7 +15,7 @@ ItemPopulator.prototype = {
 	populateArea: function(area, level){
 		var items = Util.rand(0,2);
 		for (var i = 0; i < items; i++){
-			var position = level.getFreePlace(area);
+			var position = level.getFreePlace(area, false, true);
 			var item = this.getAnItem();
 			level.addItem(item, position.x, position.y);
 		}
