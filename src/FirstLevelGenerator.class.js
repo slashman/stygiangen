@@ -9,7 +9,7 @@ FirstLevelGenerator.prototype = {
 	LAVA_CHANCE:     [100,  0, 20,  0,100, 10, 50,100],
 	WATER_CHANCE:    [  0,100, 10,100,  0, 50,  0,  0],
 	CAVERN_CHANCE:   [ 80, 80, 20, 20, 60, 90, 10, 50],
-	LAGOON_CHANCE:   [  0, 50, 10, 20,  0, 30,  0,  0],
+	LAGOON_CHANCE:   [  0, 10, 10, 20,  0, 30,  0,  0],
 	WALLLESS_CHANCE: [ 50, 10, 80, 90, 10, 90, 10, 50],
 	HEIGHT:          [  1,  2,  1,  1,  1,  2,  2,  3],
 	VERMIN: [
