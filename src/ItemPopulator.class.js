@@ -32,7 +32,7 @@ ItemPopulator.prototype = {
 		}
 	},
 	ITEMS: [
-		{code: 'dagger', rarity: 3500},
+		{code: 'dagger', rarity: 500},
 //		{code: 'oilFlask', rarity: 1400},
 		{code: 'staff', rarity: 350},
 		{code: 'sling', rarity: 280},
