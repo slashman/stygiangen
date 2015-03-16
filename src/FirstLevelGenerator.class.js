@@ -17,7 +17,7 @@ FirstLevelGenerator.prototype = {
 	         ['bat', 'rat'],
 	         ['spider'],
 	         ['bat'],
-	         ['mongbat']
+	         ['mongbat'],
 	         ['headless'],
 	         ['headless', 'mongbat'],
 	         ['headless', 'skeleton']
