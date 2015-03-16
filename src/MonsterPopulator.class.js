@@ -16,7 +16,7 @@ MonsterPopulator.prototype = {
 	},
 	populateVermin: function( level){
 		var tries = 0;
-		var vermin = 20;
+		var vermin = 10;
 		for (var i = 0; i < vermin; i++){
 			var monster = Util.randomElementOf(level.vermin);
 			var onlyWater = this.isWaterMonster(monster);

@@ -25,7 +25,7 @@ FirstLevelGenerator.prototype = {
 	GANGS: [
 		[ // Level 1
 			{boss: 'daemon', minions: ['mongbat'], quantity: 2},
-			{minions: ['mongbat'], quantity: 3},
+			{minions: ['mongbat'], quantity: 2},
 			{boss: 'hydra', minions: ['mongbat'], quantity: 2}
 		],
 		[ // Level 2
@@ -36,7 +36,7 @@ FirstLevelGenerator.prototype = {
 			{minions: ['octopus'], quantity: 3}
 		],
 		[ // Level 3
-			{minions: ['daemon'], quantity: 4},
+			{minions: ['daemon'], quantity: 3},
 			{boss: 'balron', minions: ['daemon'], quantity: 2}
 		],
 		[ // Level 4
