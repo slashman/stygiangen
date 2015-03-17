@@ -149,7 +149,7 @@ FirstLevelGenerator.prototype = {
 		area.items = [];
 		var randomGang = Util.randomElementOf(this.GANGS[depth-1]);
 		area.enemies = randomGang.minions;
-		area.enemyCount = randomGang.quantity + Util.rand(0,3);
+		area.enemyCount = randomGang.quantity + Util.rand(1,4);
 		if (randomGang)
 			area.boss = randomGang.boss;
 	},
