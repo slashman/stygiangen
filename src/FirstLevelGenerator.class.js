@@ -26,6 +26,7 @@ FirstLevelGenerator.prototype = {
 		[ // Level 1
 			{boss: 'daemon', minions: ['mongbat'], quantity: 2},
 			{minions: ['mongbat'], quantity: 2},
+			{minions: ['lavaLizard'], quantity: 2},
 			{boss: 'hydra', minions: ['mongbat'], quantity: 2}
 		],
 		[ // Level 2
@@ -49,7 +50,7 @@ FirstLevelGenerator.prototype = {
 			{minions: ['reaper', 'gazer'], quantity: 3},
 			{boss: 'balron', minions: ['headless'], quantity: 3},
 			{boss: 'zorn', minions: ['headless'], quantity: 3},
-			{minions: ['dragon', 'mongbat'], quantity: 3},
+			{minions: ['dragon', 'lavaLizard'], quantity: 3},
 		],
 		[ // Level 6
 			{minions: ['reaper'], quantity: 3},
@@ -71,7 +72,7 @@ FirstLevelGenerator.prototype = {
 			{minions: ['gazer', 'balron'], quantity: 3},
 			{boss: 'liche', minions: ['skeleton'], quantity: 4},
 			{minions: ['ghost', 'wisp'], quantity: 4},
-			{minions: ['mongbat'], quantity: 5}
+			{minions: ['lavaLizard'], quantity: 5}
 		]		
 	],
 	CAVERN_WALLS: 1,
