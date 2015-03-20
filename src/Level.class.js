@@ -10,6 +10,7 @@ Level.prototype = {
 		this.enemies = [];
 		this.enemiesMap = {};
 		this.items = [];
+		this.features = [];
 		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
 			this.cells[x] = [];
 		}
@@ -29,6 +30,13 @@ Level.prototype = {
 	addItem: function(item, x, y){
 		this.items.push({
 			code: item,
+			x: x,
+			y: y
+		});
+	},
+	addFeature: function(feature, x, y){
+		this.features.push({
+			code: feature,
 			x: x,
 			y: y
 		});
@@ -59,6 +67,18 @@ Level.prototype = {
 			} else if (cell == area.floor || area.corridor && cell == area.corridor || cell == 'fakeWater')
 				return randPoint;
 		}
+	},
+	isFreeAround: function(spot, area){
+		for (var x = -1; x <= 1; x++){
+			for (var y = -1; y <= 1; y++){
+				if (x == 0 && y == 0)
+					continue;
+				var cell = this.cells[spot.x + x][spot.y + y];
+				if (cell != area.floor)
+					return false;
+			}
+		}
+		return true;
 	},
 	getFreePlaceOnLevel: function(onlyWater, noWater){
 		var tries = 0;

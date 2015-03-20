@@ -22,6 +22,7 @@ FirstLevelGenerator.prototype = {
 	         ['headless', 'mongbat'],
 	         ['headless', 'skeleton']
 	        ],
+    OBJECTS: ['orb', 'deadTree', 'tree', 'statue', 'signPost', 'well', 'smallSign', 'lamp', 'flame', 'campfire', 'altar', 'prisonerThing', 'fountain'],
 	GANGS: [
 		[ // Level 1
 			{boss: 'daemon', minions: ['mongbat'], quantity: 2},
@@ -153,6 +154,9 @@ FirstLevelGenerator.prototype = {
 		area.enemyCount = randomGang.quantity + Util.rand(1,4);
 		if (randomGang)
 			area.boss = randomGang.boss;
+		if (Util.chance(50)){
+			area.feature = Util.randomElementOf(this.OBJECTS);
+		}
 	},
 	placeExits: function(areas){
 		var dist = null;
