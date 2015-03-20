@@ -11,9 +11,9 @@ ThirdLevelGenerator.prototype = {
 		this.fillRooms(sketch, level)
 		this.fattenCaverns(level);
 		this.placeExits(sketch, level);
-		this.placeFeatures(sketch, level);
 		this.raiseIslands(level);
 		this.enlargeBridges(level);
+		this.placeFeatures(sketch, level);
 		level.areasSketch = sketch.areas;
 		return level;
 	},
@@ -149,7 +149,10 @@ ThirdLevelGenerator.prototype = {
 				i--;
 				continue;
 			}
-			if (!level.isFreeAround(freeSpot, area)){
+			if (!level.isFreeAround(freeSpot, area) ||
+				(Math.abs(freeSpot.x - level.end.x) < 3 && Math.abs(freeSpot.y - level.end.y) < 3) ||
+				(Math.abs(freeSpot.x - level.start.x) < 3 && Math.abs(freeSpot.y - level.start.y) < 3)
+					){
 				tries++;
 				if (tries > 100){
 					tries = 0;
@@ -158,7 +161,7 @@ ThirdLevelGenerator.prototype = {
 				}
 				continue;
 			}
-			level.addFeature(freeSpot.x, freeSpot.y, area.feature);
+			level.addFeature(area.feature, freeSpot.x, freeSpot.y);
 		}
 	},
 	fillWithCavern: function(level, area){
