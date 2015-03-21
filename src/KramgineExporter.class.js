@@ -104,6 +104,18 @@ KramgineExporter.prototype = {
 	        };
 			objects.push(itemData);
 		}
+		for (var i = 0; i < level.features.length; i++){
+			var feature = level.features[i];
+			var itemData =
+			{
+	            x: feature.x + 0.5,
+	            z: feature.y + 0.5,
+	            y: 0,
+	            type: 'item', //TODO: Change to feature once it's supported
+	            item: feature.code //TODO: Change to feature once it's supported
+	        };
+			objects.push(itemData);
+		}
 		return objects;
 	},
 	getMap: function(level, objects){
