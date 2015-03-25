@@ -5,6 +5,7 @@ function Generator(config){
 	this.thirdLevelGenerator = new ThirdLevelGenerator(config);
 	this.monsterPopulator = new MonsterPopulator(config);
 	this.itemPopulator = new ItemPopulator(config);
+	this.veinGenerator = new VeinGenerator(config);
 }
 
 var FirstLevelGenerator = require('./FirstLevelGenerator.class');
@@ -12,6 +13,7 @@ var SecondLevelGenerator = require('./SecondLevelGenerator.class');
 var ThirdLevelGenerator = require('./ThirdLevelGenerator.class');
 var MonsterPopulator = require('./MonsterPopulator.class');
 var ItemPopulator = require('./ItemPopulator.class');
+var VeinGenerator = require('./VeinGenerator.class');
 
 Generator.prototype = {
 	generateLevel: function(depth){
@@ -21,6 +23,7 @@ Generator.prototype = {
 		this.secondLevelGenerator.frameLevel(sketch, level);
 		this.monsterPopulator.populateLevel(sketch, level);
 		this.itemPopulator.populateLevel(sketch, level);
+		this.veinGenerator.traceVeins(sketch, level);
 		return {
 			sketch: sketch,
 			level: level

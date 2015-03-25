@@ -66,6 +66,10 @@ CanvasRenderer.prototype = {
 					color = '#0000FF';
 				}else if (cell === 'solidRock'){
 					color = '#594B2D';
+				}else if (cell === 'darkRock'){
+					color = '#332b1a';
+				}else if (cell === 'grayRock'){
+					color = '#595959';
 				}else if (cell === 'cavernFloor'){
 					color = '#876418';
 				}else if (cell === 'downstairs'){
