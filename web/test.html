@@ -33,7 +33,7 @@ function generate(many, tiles){
 		many = 1;
 	for (var i = 0; i < many; i++){
 		var depth = parseInt(document.getElementById('txtDepth').value);
-		generatedLevel = generator.generateLevel(depth);
+		generatedLevel = generator.generateLevel(depth, [] );
 		canvasRenderer.drawLevel(generatedLevel.level, 'levelCanvas');
 		canvasRenderer.drawSketch(generatedLevel.sketch, 'levelCanvas', true);
 		if (tiles){

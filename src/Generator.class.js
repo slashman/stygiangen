@@ -16,13 +16,13 @@ var ItemPopulator = require('./ItemPopulator.class');
 var VeinGenerator = require('./VeinGenerator.class');
 
 Generator.prototype = {
-	generateLevel: function(depth){
+	generateLevel: function(depth, uniqueRegistry){
 		var sketch = this.firstLevelGenerator.generateLevel(depth);
 		var level = this.secondLevelGenerator.fillLevel(sketch);
 		this.thirdLevelGenerator.fillLevel(sketch, level);
 		this.secondLevelGenerator.frameLevel(sketch, level);
 		this.monsterPopulator.populateLevel(sketch, level);
-		this.itemPopulator.populateLevel(sketch, level);
+		this.itemPopulator.populateLevel(sketch, level, uniqueRegistry);
 		this.veinGenerator.traceVeins(sketch, level);
 		return {
 			sketch: sketch,
