@@ -26,6 +26,8 @@ KramgineExporter.prototype = {
 		this.addTile('STONE_WALL_5', 8, 0, 0, 0);
 		this.addTile('STONE_WALL_6', 9, 0, 0, 0);
 		this.addTile('CAVERN_WALL_1', 10, 0, 0, 0);
+		this.addTile('CAVERN_WALL_2', 11, 0, 0, 0);
+		this.addTile('CAVERN_WALL_3', 12, 0, 0, 0);
 		
 		this.addTile('CAVERN_FLOOR_1', 0, 5, 3, 0);
 		this.addTile('CAVERN_FLOOR_2', 0, 6, 3, 0);
@@ -137,6 +139,10 @@ KramgineExporter.prototype = {
 					id = this.getTile("WATER");
 				}else if (cell === 'solidRock'){
 					id = this.getTile("CAVERN_WALL", 1);
+				}else if (cell === 'grayRock'){
+					id = this.getTile("CAVERN_WALL", 2);
+				}else if (cell === 'darkRock'){
+					id = this.getTile("CAVERN_WALL", 3);
 				}else if (cell === 'cavernFloor'){ 
 					id = this.getTile("CAVERN_FLOOR", area.floorType);
 				}else if (cell === 'downstairs'){
