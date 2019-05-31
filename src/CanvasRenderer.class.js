@@ -123,72 +123,60 @@ CanvasRenderer.prototype = {
 			context.fillRect(item.x * zoom, item.y * zoom, zoom, zoom);
 		}
 	},
+	loadImages: function (cb) {
+		var imageNames = [
+		'water', 'solidRock', 'cavernFloor', 'downstairs', 'upstairs', 'stoneWall', 'stoneFloor', 'bridge', 'lava',
+		'treasure', 'darkRock', 
+		'bat', 'lavaLizard', 'daemon',
+		'seaSerpent', 'hydra', 'octopus', 'balron',
+		'spider', 'rat', 'mongbat', 'headless', 'skeleton',
+		'gazer', 'liche', 'ghost', 'gremlin',
+		'dragon', 'zorn', 'reaper',
+		'evilMage', 'wisp', 'ghost', 'warrior', 'mage', 'bard', 'druid', 'tinker', 'paladin', 'shepherd', 'ranger'
+		];
+		var loadedImages = 0;
+		function loaded() {
+			loadedImages++;
+			if (loadedImages == imageNames.length) {
+				cb();
+			}
+		}
+		var tiles = {};
+		for (var i = 0; i < imageNames.length; i++) {
+			var imageName = imageNames[i];
+			tiles[imageName] = new Image();
+			tiles[imageName].src = 'img/' + imageName + '.png';
+			tiles[imageName].onload = loaded;
+		}
+		tiles.fakeWater = tiles.water;
+		tiles.corridor = tiles.stoneFloor;
+		tiles.padding = tiles.stoneFloor;
+		tiles.grayRock = tiles.cavernFloor;
+		this.tiles = tiles;
+	},
 	drawLevelWithIcons: function(level, canvas){
 		var canvas = document.getElementById(canvas);
 		var context = canvas.getContext('2d');
 		context.font="12px Georgia";
 		context.clearRect(0, 0, canvas.width, canvas.height);
-		var zoom = 8;
-		var water = new Image();
-		water.src = 'img/water.png';
-		var fakeWater = new Image();
-		fakeWater.src = 'img/water.png';
-		var solidRock = new Image();
-		solidRock.src = 'img/solidRock.png';
-		var cavernFloor = new Image();
-		cavernFloor.src = 'img/cavernFloor.png';
-		var downstairs = new Image();
-		downstairs.src = 'img/downstairs.png';
-		var upstairs = new Image();
-		upstairs.src = 'img/upstairs.png';
-		var stoneWall = new Image();
-		stoneWall.src = 'img/stoneWall.png';
-		var stoneFloor = new Image();
-		stoneFloor.src = 'img/stoneFloor.png';
-		var bridge = new Image();
-		bridge.src = 'img/bridge.png';
-		var lava = new Image();
-		lava.src = 'img/lava.png';
-		var bat = new Image();
-		bat.src = 'img/bat.png';
-		var lavaLizard = new Image();
-		lavaLizard.src = 'img/lavaLizard.png';
-		var daemon = new Image();
-		daemon.src = 'img/daemon.png';
-		var treasure = new Image();
-		treasure.src = 'img/treasure.png';
-		var tiles = {
-			water: water,
-			fakeWater: fakeWater,
-			solidRock: solidRock,
-			cavernFloor: cavernFloor,
-			downstairs: downstairs,
-			upstairs: upstairs,
-			stoneWall: stoneWall,
-			stoneFloor: stoneFloor,
-			bridge: bridge,
-			lava: lava,
-			bat: bat,
-			lavaLizard: lavaLizard,
-			daemon: daemon,
-			treasure: treasure
-		}
+		var zoom = 1;
 	    var cells = level.cells;
-		for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
+    
+    	for (var x = 0; x < this.config.LEVEL_WIDTH; x++){
 			for (var y = 0; y < this.config.LEVEL_HEIGHT; y++){
 				var cell = cells[x][y]; 
-				context.drawImage(tiles[cell], x * 16, y * 16);
+				context.drawImage(this.tiles[cell], x * 16, y * 16);
 			}
 		}
 		for (var i = 0; i < level.enemies.length; i++){
 			var enemy = level.enemies[i];
-			context.drawImage(tiles[enemy.code], enemy.x * 16, enemy.y * 16);
+			context.drawImage(this.tiles[enemy.code], enemy.x * 16, enemy.y * 16);
 		}
 		for (var i = 0; i < level.items.length; i++){
 			var item = level.items[i];
-			context.drawImage(tiles['treasure'], item.x * 16, item.y * 16);
+			context.drawImage(this.tiles['treasure'], item.x * 16, item.y * 16);
 		}
 	}
 }
 
-module.exports = CanvasRenderer;
+module.exports = CanvasRenderer;	

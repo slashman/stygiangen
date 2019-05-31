@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>Slashie's Stygian Abyss level generator</title>
+<script type="text/javascript" src="stygianGen.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+
+var config = {
+	MIN_WIDTH: 10,
+	MIN_HEIGHT: 10,
+	MAX_WIDTH: 20,
+	MAX_HEIGHT: 20,
+	LEVEL_WIDTH: 64,
+	LEVEL_HEIGHT: 64,
+	SUBDIVISION_DEPTH: 3,
+	SLICE_RANGE_START: 3/8,
+	SLICE_RANGE_END: 5/8,
+	RIVER_SEGMENT_LENGTH: 10,
+	MIN_RIVER_SEGMENTS: 10,
+	MAX_RIVER_SEGMENTS: 20,
+	MIN_RIVERS: 3,
+	MAX_RIVERS: 5
+};
+
+var generator = new Generator(config);
+var canvasRenderer = new CanvasRenderer(config);
+var kramgineExporter = new KramgineExporter(config);
+
+var generatedLevel = null;
+
+function generate(many, tiles){
+	if (!many)
+		many = 1;
+	for (var i = 0; i < many; i++){
+		var depth = parseInt(document.getElementById('txtDepth').value);
+		if (!depth || depth < 1 || depth > 8) {
+			depth = 1;
+		}
+		generatedLevel = generator.generateLevel(depth, [] );
+		canvasRenderer.drawLevel(generatedLevel.level, 'levelCanvas');
+		canvasRenderer.drawSketch(generatedLevel.sketch, 'levelCanvas', true);
+		if (tiles){
+			document.getElementById('levelCanvasImage').style.display = 'inline';
+			canvasRenderer.drawLevelWithIcons(generatedLevel.level, 'levelCanvasImage');
+		}
+		console.log("Generated "+(i+1));
+	}
+}
+
+function exportToKramgine(){
+	console.log(kramgineExporter.getLevel(generatedLevel.level))
+}
+
+</script>
+<div>
+	<p><b>Slashie's Stygian Abyss level generator</b></p>
+	<p>Generates level layouts similar to Ultima Underworld, mixed with the themes and content of Ultima IV</p>
+	<p>This generator is used in the dungeon exploration game, <a href = "https://slashie.net/stygian/">Stygian Abyss</a></p>
+	<p>More info <a href = "https://blog.slashie.net/2015/03/16/stygian-abyss-2015-7drl-challenge-victory/">here</a>, source code <a href = "https://github.com/slashman/stygiangen">here</a></p>
+	<p>Made by <a href = "https://slashie.net/">Slashie</a></p>
+</div>
+<div>
+Depth (1 to 8): <input type = "number" value = "2" min = "1" max = "8" id = "txtDepth"/>
+<input type = "button" value = "Loading Images.." onclick="generate(1, true);" id = "btnGenerate" disabled="disabled" />
+</div>
+<canvas id="levelCanvasImage" width="1024" height="1024" style = "display: none;"></canvas>
+<canvas id="levelCanvas" width="512" height="512"></canvas>
+<script type="text/javascript">
+canvasRenderer.loadImages(function() {
+	var button = document.getElementById("btnGenerate");
+	button.value = "Generate";
+	button.disabled = false;
+});
+</script>
+</body>
+</html>
